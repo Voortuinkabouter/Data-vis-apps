@@ -1,1 +1,28 @@
+Thank you for answering my questions. Here are some basic steps and code snippets to create your web app:
 
+Create an HTML file named index.html and add the following code:
+<html>
+
+<head>
+    <title>SLS Grapher</title>
+    <style>
+        /* Add your custom CSS styles here */
+    </style>
+</head>
+
+<body>
+    <h1>SLS Grapher</h1>
+    <p>Select one or more excel files to plot their x, y data.</p>
+    <input type="file" id="file-input" multiple accept=".xls,.xlsx" />
+    <div id="plot-container"></div>
+    <button id="prev-button" disabled>Previous</button>
+    <button id="next-button" disabled>Next</button>
+    <!-- Load plotly.js library -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Load SheetJS library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <!-- Load your custom JavaScript file -->
+    <script src="script.js"></script>
+</body>
+
+</html>
