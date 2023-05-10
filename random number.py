@@ -24,5 +24,7 @@ df = pd.DataFrame()
 df['bins'] = bin_edges2
 df['frequency'] = hist_data
 
+print(df)
+
 
 
