@@ -54,10 +54,7 @@ h1 {
     text-align: center;
 }
 
-p {
-    font-family: var(--font-family-3);
-    font-size: 18px;
-}
+
 
 bold {
     font-weight: var(--font-weight-bold);
@@ -89,11 +86,6 @@ main {
     gap: 20px;
 }
 
-/* Style the introduction section with a different background color and some padding */
-.introduction {
-    background-color: var(--neutral-color);
-    padding: 20px;
-}
 
 /* Style the chart-card with a box shadow and some padding */
 .chart-card {
@@ -105,6 +97,11 @@ main {
 .chart-card h1 {
     text-align: left;
     font-family: var(--font-family-2);
+}
+
+.chart-card p {
+    font-family: var(--font-family-3);
+    font-size: 18px;
 }
 
 .inputbutton-container {
@@ -123,8 +120,6 @@ input[type=file]::file-selector-button {
     color: var(--text-color);
     transition: .3s;
     font-family: var(--font-family-1);
-
-
 }
 
 input[type=file]::file-selector-button:hover {
@@ -132,6 +127,12 @@ input[type=file]::file-selector-button:hover {
     color: var(--secondary-color);
     cursor: pointer;
 }
+
+.chart-container {
+    height: 400px;
+    background-color: var(--neutral-light);
+}
+
 
 .buttons-container {
     display: flex;
@@ -158,15 +159,7 @@ input[type=file]::file-selector-button:hover {
     color: var(--bg-color);
 }
 
-.chart-container {
-    height: 400px;
-    background-color: var(--neutral-light);
-}
 
-.footer {
-    background-color: var(--neutral-darker);
-    padding: 20px;
-}
 
 .run:hover,
 .next:hover {
@@ -187,4 +180,13 @@ input[type=file]::file-selector-button:hover {
     background-color: var(--text-color);
     color: var(--accent-color);
 
+}
+
+
+
+.footer {
+    background-color: var(--neutral-darker);
+    padding: 20px;
+    font-family: var(--font-family-3);
+    font-size: .75rem;
 }
