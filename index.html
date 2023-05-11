@@ -1,25 +1,86 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- displays site properly based on user's device -->
+
+
+    <link rel="stylesheet" href="style.css">
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Open+Sans&family=Roboto&display=swap"
+        rel="stylesheet">
+
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Fredoka:wght@500;600&family=Poiret+One&family=Shrikhand&display=swap"
+        rel="stylesheet">
+    <html>
+
     <title>SLS Grapher</title>
-    <style>
-        /* Add your custom CSS styles here */
-    </style>
+
+
 </head>
 
 <body>
-    <h1>SLS Grapher</h1>
-    <p>Select one or more excel files to plot their x, y data.</p>
-    <input type="file" id="file-input" multiple accept=".xls,.xlsx" />
-    <div id="plot-container"></div>
-    <button id="prev-button" disabled>Previous</button>
-    <button id="next-button" disabled>Next</button>
+    <div class="container">
+        <header>
+            <nav class="navbar">
+                <h1>SLS Grapher</h1>
+            </nav>
+
+        </header>
+        <main>
+            <div class="app-container">
+
+                <div class="chart-card">
+                    <h1>Plot a Graph! </h1>
+                    <p>Select one or more excel files. Then press the <bold>"Run"</bold> button to plot a line chart of
+                        the
+                        first two columns in the file.
+                        Press the <bold>"Next"</bold> if you have selected multiple files and want to view the next
+                        chart.
+                    </p>
+
+
+
+                    <div class="inputbutton-container">
+                        <label class="inputlabel" for="file-input">Upload File(s):</label>
+                        <input class="inputbutton" type="file" id="file-input" multiple accept=".xls,.xlsx" />
+
+
+                        <div class="chart-container">
+                            <canvas class="chart" id="myChart"></canvas>
+                        </div>
+                        <div class="buttons-container">
+                            <button class="run" id="run-button">Run</button>
+                            <button class="next" id="next-button">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+        </main>
+        <footer class="footer">
+            <p>Made as part of a knowledge investment project.</p>
+        </footer>
+    </div>
     <!-- Load plotly.js library -->
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <!-- Load SheetJS library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
-    <!-- Load your custom JavaScript file -->
-    <script src="app.js"></script>
+
 </body>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<!-- Load SheetJS library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
+<!-- Load CartJS library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Load your custom JavaScript file -->
+<script src="appv2gpt.js"></script>
 
 </html>
