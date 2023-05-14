@@ -2,19 +2,15 @@
     box-sizing: border-box;
 }
 
-.chart-container {
+/* .chart-container {
     width: 100%;
     height: 50vh;
     border: 3px solid var(--neutral-darker);
     border-radius: 25px;
     padding: 2rem;
-    position: relative;
-    background-color: var(--neutral-light);
-}
 
-.chart {
-    width: 100%;
-}
+    background-color: #2196f3;
+} */
 
 /* Define dark mode colors */
 :root {
@@ -23,52 +19,149 @@
     --primary-color: #2196f3;
     --secondary-color: #e91e63;
     --accent-color: #debc16;
-    --font-family-0: "Roboto", sans-serif;
-    --font-family-0: "Open Sans", sans-serif;
+
+
     --font-family-3: "Lato", sans-serif;
     --font-family-2: 'Fredoka', sans-serif;
+
+    --font-family-1: 'Bruno Ace SC', cursive;
+    /* 
+    --font-family-0: "Roboto", sans-serif;
+    --font-family-0: "Open Sans", sans-serif;
     --font-family-0: 'Poiret One', cursive;
     --font-family-0: 'Shrikhand', cursive;
-    --font-family-1: 'Bruno Ace SC', cursive;
+ */
+
+    --font-weight-light: 300;
+    --font-weight-regular: 500;
+    --font-weight-semi-bold: 700;
+    --font-weight-bold: 900;
 
 
-    --font-weight-bold: 700;
     --neutral-light: color-mix(in srgb, var(--bg-color) 10%, var(--text-color) 90%);
-    --neutral-color: color-mix(in srgb, var(--bg-color) 40%, var(--text-color) 60%);
-    --neutral-dark: color-mix(in srgb, var(--bg-color) 70%, var(--text-color) 30%);
+    --neutral-color: color-mix(in srgb, var(--bg-color) 60%, var(--text-color) 40%);
+    --neutral-dark: color-mix(in srgb, var(--bg-color) 80%, var(--text-color) 20%);
     --neutral-darker: color-mix(in srgb, var(--bg-color) 90%, var(--text-color) 10%);
+
+    --graph-padding: 0px;
+}
+
+
+.chart-container {
+    width: 100%;
+    background-color: white;
+    width: 100%;
+    height: 50vh;
+    border: 3px solid var(--neutral-darker);
+    border-radius: 25px;
+    /*  padding: var(--graph-padding); */
+
+
+}
+
+.chart {
+    width: calc(100%- var(--graph-padding));
+    height: 100%;
+    overflow: hidden;
+    overflow-wrap: unset;
+}
+
+
+
+
+/* Center the container and give it some margin */
+.container {
+    position: relative;
+    max-width: 1200px;
+    margin: auto auto 40px auto;
+    background-color: var(--neutral-dark);
+    border-left: 2px solid var(--text-color);
+    border-right: 2px solid var(--text-color);
+}
+
+.container::before {
+    position: absolute;
+    left: 0%;
+    right: 0;
+    top: 0;
+    content: '';
+    z-index: -1;
+    height: 100%;
+    width: 50%;
+    background-color: aqua;
+    box-shadow: 0px 0px 10px 5px var(--primary-color);
+}
+
+.container::after {
+    position: absolute;
+    left: 50%;
+    right: 0;
+    top: 0;
+    content: '';
+    z-index: -1;
+    height: 100%;
+    width: 50%;
+    box-shadow: 0px 0px 10px 5px var(--secondary-color);
+
+}
+
+body {
+    background-color: var(--neutral-darker);
+    color: var(--text-color);
+    margin: 0 auto;
+}
+
+footer,
+main {
+    border-top: 2px solid var(--text-color);
+    padding: 20px;
+}
+
+main {
+    background-color: var(--neutral-color);
+}
+
+footer {
+    border-bottom: 2px solid var(--text-color);
+    background-color: var(--neutral-dark);
+    padding: 30px;
+    font-family: var(--font-family-3);
+    font-weight: var(--font-weight-light);
+    font-size: 16px;
+
 }
 
 /* Apply dark mode colors to the body and other elements */
-body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    margin: 0 auto;
-
-
-}
 
 h1 {
     font-family: var(--font-family-1);
     font-size: 36px;
     text-align: center;
+
 }
 
-p {
+/* p {
     font-family: var(--font-family-3);
     font-size: 18px;
-}
+} */
 
 bold {
     font-weight: var(--font-weight-bold);
 }
 
-/* Center the container and give it some margin */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    background-color: var(--neutral-dark);
+
+.text-accent {
+    color: var(--accent-color);
 }
+
+.text-primary {
+    color: var(--primary-color);
+}
+
+.text-secondary {
+    color: var(--secondary-color);
+}
+
 
 /* Style the navbar with a gradient background and some padding */
 .navbar {
@@ -77,10 +170,7 @@ bold {
 }
 
 /* Style the main element with some padding and a border */
-main {
-    padding: 20px;
-    border: 2px solid var(--text-color);
-}
+
 
 /* Style the app-container with a flex layout and some gap */
 .app-container {
@@ -90,10 +180,7 @@ main {
 }
 
 /* Style the introduction section with a different background color and some padding */
-.introduction {
-    background-color: var(--neutral-color);
-    padding: 20px;
-}
+
 
 /* Style the chart-card with a box shadow and some padding */
 .chart-card {
@@ -104,15 +191,31 @@ main {
 
 .chart-card h1 {
     text-align: left;
-    font-family: var(--font-family-2);
+    font-family: var(--font-family-3);
+    font-weight: var(--font-weight-bold);
 }
+
+.chart-card p {
+    font-family: var(--font-family-3);
+    font-weight: var(--font-weight-regular);
+    font-size: 18px;
+
+}
+
 
 .inputbutton-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    font-family: var(--font-family-2);
+    font-weight: var(--font-weight-regular);
+    font-size: 24px;
+}
+
+input {
     font-family: var(--font-family-3);
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-light);
+    font-size: 18px;
 }
 
 input[type=file]::file-selector-button {
@@ -123,6 +226,7 @@ input[type=file]::file-selector-button {
     color: var(--text-color);
     transition: .3s;
     font-family: var(--font-family-1);
+    margin-right: 20px;
 
 
 }
@@ -138,8 +242,9 @@ input[type=file]::file-selector-button:hover {
     justify-content: space-between;
 }
 
-.run,
-.next {
+.save,
+.next,
+.previous {
     appearance: none;
     border: none;
     border-radius: 5px;
@@ -148,43 +253,87 @@ input[type=file]::file-selector-button:hover {
     padding: 10px;
     cursor: pointer;
     display: inline-block;
-    width: 20%;
+    min-width: 10rem;
     font-family: var(--font-family-1);
     font-size: 1.1rem;
+
+    overflow: hidden;
+    /* text-overflow: ellipsis; */
 }
 
-.next {
+.next,
+.previous {
     background-color: var(--accent-color);
     color: var(--bg-color);
 }
 
-.chart-container {
-    height: 400px;
-    background-color: var(--neutral-light);
+
+.previous {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    margin-left: auto;
+    margin-right: 1rem;
 }
 
-.footer {
-    background-color: var(--neutral-darker);
-    padding: 20px;
-}
 
-.run:hover,
-.next:hover {
+
+.save:hover,
+.next:hover,
+.previous:hover {
     transform: scale(1.05);
     transition-duration: .3s;
     cursor: pointer;
 
 }
 
-.run:hover {
+.save:hover {
     background-color: var(--text-color);
     color: var(--primary-color);
 
 }
 
 .next:hover {
-    transform: translateX(7px);
+    transform: translateX(2px);
     background-color: var(--text-color);
     color: var(--accent-color);
 
+}
+
+.previous:hover {
+    transform: translateX(-2px);
+    background-color: var(--text-color);
+    color: var(--accent-color);
+}
+
+
+
+
+
+@media screen and (max-width: 600px) {
+
+    .buttons-container {
+        display: grid;
+        gap: 1rem;
+        margin: 0 0 0 0;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            'previous next'
+            'save save';
+    }
+
+    .buttons-container>button:nth-of-type(1) {
+        grid-area: save;
+    }
+
+    .buttons-container>button:nth-of-type(2) {
+        margin: 0 0;
+        grid-area: previous;
+
+    }
+
+    .buttons-container>button:nth-of-type(3) {
+
+        grid-area: next;
+
+    }
 }

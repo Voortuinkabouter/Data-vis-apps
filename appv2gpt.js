@@ -7,8 +7,7 @@ var fileInput = document.getElementById("file-input");
 // Get the previous and next buttons
 var runButton = document.getElementById("run-button");
 var nextButton = document.getElementById("next-button");
-
-var data_from_excel = [[10],[10]]
+var data_from_excel = [[1,2,3,4,5,6,7,8,9,10],[1,2,3,4,5,6,7,8,9,10]]
 var current_data_index = 0;
 
 fileInput.addEventListener('change', () => {
