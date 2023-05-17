@@ -14,7 +14,7 @@ var read_excel= false
 // set up trace and plotly layout and config.
 var x = [1,2,3,4,5,6,7,8,9,10]
 var y = [1,2,3,4,5,100,7,8,9,10]
-var init_data = [{x: x, y: y, line:{color: 'rgb(233,30,99)'}}];
+var init_data = [{x: x, y: y, line:{color: 'rgb(233,30,99)'}, fill: 'tozeroy'}];
 
 /* var trace = {
   x: [1,2,3,4,5,6,7,8,9,10],
