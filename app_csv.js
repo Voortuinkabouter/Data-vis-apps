@@ -1,29 +1,46 @@
 // Get the file input element
-var fileInput = document.getElementById("file-input");
+const fileInput = document.getElementById("file-input");
 
 // Get the buttons
-var prevButton = document.getElementById("prev-button");
-var nextButton = document.getElementById("next-button");
-var saveButton = document.getElementById("save-button");
+const prevButton = document.getElementById("prev-button");
+const nextButton = document.getElementById("next-button");
+const saveButton = document.getElementById("save-button");
+
 
 // initialize data variables.
-var data_from_excel = [[1,2,3,4,5,6,7,8,9,10],[1,2,3,4,5,100,7,8,9,10]]
-var current_data_index = 0;
-var read_excel= false
+const cumulativeSum = (sum => value => sum += value)(0);
+let data_from_excel = []
+let current_data_index = 0;
+let read_excel= false
 
-// set up trace and plotly layout and config.
-var x = [1,2,3,4,5,6,7,8,9,10]
-var y = [1,2,3,4,5,100,7,8,9,10]
-var init_data = [{x: x, y: y, line:{color: 'rgb(233,30,99)'}, fill: 'tozeroy'}];
+let x=  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+let y= x.map(x => x**2);
 
-/* var trace = {
-  x: [1,2,3,4,5,6,7,8,9,10],
-  y: [1,2,3,4,5,6,7,8,9,10],
+console.log(x)
+console.log(y)
+
+
+var trace1 = {
+  x: x,
+  y: y,
   type: 'scatter',
-  line: {
-    color: 'rgb(233, 30, 99)' ,
-    width: 3
-  } */
+  fill: 'tozeroy',
+  line:{color: 'rgb(233,30,99)'}
+  
+};
+
+var trace2 = {
+  x: x,
+  y: y.map(cumulativeSum),
+  type:"scatter",
+  mode:"lines",
+  line:{color: 'rgb(33, 150, 243)', shape:"hvh"}
+  // line:{color: 'rgb(222, 188, 22)'}
+};
+
+
+var data = [trace1, trace2];
+
 var layout={
   title:"Test title",
   font: {size:18},
@@ -47,7 +64,7 @@ var config = {
 }
 
 // Plot the plot.
-Plotly.newPlot('chart', init_data, layout, config);
+Plotly.newPlot('chart', data, layout, config);
 
 function updatePlot(){
 x= data_from_excel[current_data_index][0];
@@ -55,16 +72,9 @@ y= data_from_excel[current_data_index][1];
 
 var xnostring = x.filter(el => typeof el === "number");
 var ynostring = x.filter(el => typeof el === "number");
-// console.log(current_data_index)
-// console.log("Updating plot...")
-// console.log(data_from_excel)
-console.log(x)
+
 console.log(y) 
 console.log("min X:", Math.min(...x))
-// console.log("max X:", Math.max(...x))
-// console.log("min Y:", Math.min(...y))
-// console.log("max Y:", Math.max(...y))
-
 
 // Create a frame object with new x and y values
 var frame1 = {
@@ -102,44 +112,7 @@ Plotly.animate(chart, frame2, {
 console.log(" Plot updated!")
 }
 
-/* 
-// Define a function to parse excel files
-const parseExcel = async (file) => {
-  // Read the file as an array buffer
-  const buffer = await file.arrayBuffer();
-  // Parse the buffer as a workbook
-  const workbook = XLSX.read(buffer, { type: 'array' });
-  // Get the first worksheet
-  const sheet = workbook.Sheets[workbook.SheetNames[0]];
-  // Convert the sheet to an array of arrays
-  const data = XLSX.utils.sheet_to_row_object_array(sheet, { header: 1 });
-  // Return the data
-  return data;
-};
 
-fileInput.addEventListener('change', async () => {
-  const files = fileInput.files;
-  current_data_index = 0;
-  var data = [];
-  for (let i = 0; i < files.length; i++) {
-    // Parse the file and get the data
-    const sheet_data = await parseExcel(files[i]);
-    console.log(sheet_data);
-    // Get the x and y values
-    var x = sheet_data.map(row => row[0]);
-    var y = sheet_data.map(row => row[1]);
-    console.log(x, y);
-    // Push to data array
-    data.push([x, y]);
-    console.log("data", data);
-    console.log(data_from_excel);
-    console.log("x from parser",x)
-  }
-  data_from_excel = data;
-  read_excel = true;
-  updatePlot();
-});
- */
 
 // Loops trough user selected xlsx files and stores first sheet first and second column as x,y data.
 fileInput.addEventListener('change', () => {
@@ -221,35 +194,3 @@ saveButton.addEventListener('click', () => {
       console.error(error);
     });
 });
-
-
-// OLD FUNCTIONS FOR 2 BUTTONS SEPARATLY, NOW COMBINED
-
-// Grabs the x,y values from the next index (x,y data sheet) in data_from_excel and updates the plotly plot.
-// Does not run when xlsx files are selected. 
-/* nextButton.addEventListener('click', () => {
- console.log("Files selected:", read_excel)
- if (read_excel==true){
-  console.log("Plotting next graph")
- 
-  current_data_index += 1;
- if (current_data_index >= data_from_excel.length) {
- current_data_index = 0;
- }
- updatePlot();
- }
- });
-
-// Same, but with previous button.
- prevButton.addEventListener('click', () => {
-  console.log("Files selected:", read_excel)
-  if (read_excel==true){
-   console.log("Plotting next graph")
-  
-   current_data_index -= 1;
-  if (current_data_index < 0) {
-  current_data_index = data_from_excel.length-1;
-  }
-  updatePlot();
-  }
-  }); */

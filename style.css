@@ -16,9 +16,9 @@
 :root {
     --bg-color: #121212;
     --text-color: #f0f0f0;
-    --primary-color: #2196f3;
+    --primary-color: rgb(33, 150, 243);
     --secondary-color: #e91e63;
-    --accent-color: #debc16;
+    --accent-color: rgb(222, 188, 22);
 
 
     --font-family-3: "Lato", sans-serif;
