@@ -267,14 +267,13 @@ input[type=file]::file-selector-button:hover {
     color: var(--bg-color);
 }
 
-
 .previous {
-    background-color: var(--accent-color);
-    color: var(--bg-color);
     margin-left: auto;
     margin-right: 1rem;
 }
-
+.save{
+    margin-right: 1rem;
+}
 
 
 .save:hover,
