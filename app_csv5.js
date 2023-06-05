@@ -322,13 +322,21 @@ function exportToExcel() {
     const values = Object.values(info); // Get the values from the info dictionary
     
     const worksheet = XLSX.utils.aoa_to_sheet([
-      ['x', 'y1', 'y2', 'info-keys','info-values'],
+      ['Diameter (µm)', 'q (%)', 'Undersize (%)', 'info-keys','info-values'],
       ...x.map((value, i) => [value, y1[i], y2[i],keys[i],values[i]])
     ]); // Create worksheet with data
     
     XLSX.utils.book_append_sheet(workbook, worksheet, sheetName); // Add worksheet to workbook
   });
   
-  const filename = 'data_export.xlsx';
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based, so add 1
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  
+  const formattedDate = `${year}${month}${day}`;
+  console.log(formattedDate);
+  
+  const filename = `SLS_export_${formattedDate}.xlsx`;
   XLSX.writeFile(workbook, filename); // Save the workbook as a file
-}
+}  

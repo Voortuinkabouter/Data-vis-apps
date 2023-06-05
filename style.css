@@ -283,48 +283,36 @@ input[type=file]::file-selector-button:hover {
     transform: scale(1.05);
     transition-duration: .3s;
     cursor: pointer;
-
 }
 
 .save:hover {
     background-color: var(--text-color);
     color: var(--primary-color);
-
 }
 
-.next:hover {
+.next:hover,
+.previous:hover {
     transform: translateX(2px);
     background-color: var(--text-color);
     color: var(--accent-color);
-
 }
-
-.previous:hover {
-    transform: translateX(-2px);
-    background-color: var(--text-color);
-    color: var(--accent-color);
-}
-
 
 .next:disabled,
 .previous:disabled {
     opacity: 0.5;
-    cursor: default;
-    transition-property: none !important;
-    transition: none !important;
-    /* Disable animation */
+    cursor: pointer;
+    /* Disable pointer events on disabled buttons */
 }
 
 .next:disabled:hover,
 .previous:disabled:hover {
     opacity: 0.5;
-    cursor: default;
-    transition-property: none !important;
-    transition: none !important;
-    /* Disable animation */
+    cursor: pointer;
+    transform: scale(1);
+    transition-duration: 0;
+    background-color: var(--accent-color);
+    color: var(--bg-color);
 }
-
-
 
 
 @media screen and (max-width: 600px) {
