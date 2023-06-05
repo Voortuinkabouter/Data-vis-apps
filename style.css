@@ -271,7 +271,8 @@ input[type=file]::file-selector-button:hover {
     margin-left: auto;
     margin-right: 1rem;
 }
-.save{
+
+.save {
     margin-right: 1rem;
 }
 
@@ -304,6 +305,24 @@ input[type=file]::file-selector-button:hover {
     color: var(--accent-color);
 }
 
+
+.next:disabled,
+.previous:disabled {
+    opacity: 0.5;
+    cursor: default;
+    transition-property: none !important;
+    transition: none !important;
+    /* Disable animation */
+}
+
+.next:disabled:hover,
+.previous:disabled:hover {
+    opacity: 0.5;
+    cursor: default;
+    transition-property: none !important;
+    transition: none !important;
+    /* Disable animation */
+}
 
 
 

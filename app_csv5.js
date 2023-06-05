@@ -10,9 +10,11 @@ const exportButton = document.getElementById("export-button");
 // Initialize data variables.
 let data_extracted= [];
 let current_data_index = 0;
-let read_file = false;
+
 
 const chart = document.getElementById('chart');
+
+updateButtonState();
 
 
 
@@ -20,13 +22,6 @@ let x_initial=  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 let y_initial= x_initial.map(x => x**2);
 const cumulativeSum = (sum => value => sum += value)(0);
 
-var trace1 = {
-  x: x_initial,
-  y: y_initial,
-  type: 'scatter',
-  fill: 'tozeroy',
-  line:{color: 'rgb(233,30,99)'}
-};
 var trace1 = {
   x: x_initial,
   y: y_initial,
@@ -97,17 +92,16 @@ var config = {
 }
 
 // Plot the initial empty chart
-
 var initial_data = [trace1, trace2];
 
 Plotly.newPlot('chart', initial_data, layout, config);
 function updatePlot() { 
   console.log(data_extracted[current_data_index])
-  const{x, y1, y2, filename} = data_extracted[current_data_index];
+  const{x, y1, y2, info} = data_extracted[current_data_index];
   console.log("x", x)
   console.log("y1", y1)
   console.log("y2", y2)
-  console.log("title", filename)
+  console.log("title", info.filename)
   const maxDataValue = Math.max(...y1, ...y2); // Find the maximum value from y1 and y2
    
  
@@ -117,7 +111,7 @@ function updatePlot() {
       { x: x, y: y2 }
     ],
     layout: {
-      title: filename/* , // Assign the title directly
+      title: info.filename/* , // Assign the title directly
       yaxis: {range :[0, Math.ceil(maxDataValue / 10) * 10]}// Round up to the nearest multiple of 10 */
     }
   // Update the y-axis range in the layout
@@ -154,16 +148,16 @@ function handleFileLoad(file) {
     const filename = file.name.replace(/\.[^/.]+$/, ""); // Extract filename without extension
     const result = event.target.result;
     const lines = result.split('\n');
-    const info = extractInfo(lines);
+    const info = extractInfo(lines,filename);
 
+    //find the first line with data headers Diameter (um) etc.
     const startIndex = findStartIndex(lines);
-    const rows = extractRows(lines, startIndex + 1);
-   
 
+    //for each row beyond the starting index  get the values as floats
+    const rows = extractRows(lines, startIndex + 1);
     const { x, y1, y2 } = extractValues(rows);
 
     const data = {
-      filename: filename,
       info: info,
       x: x,
       y1: y1,
@@ -178,11 +172,13 @@ function handleFileLoad(file) {
       console.log("File(s) read");
       updatePlot();
     }
+    updateButtonState();
   };
 }
 
-function extractInfo(lines) {
+function extractInfo(lines,filename) {
   const info = {};
+  info['filename'] = filename;
 
   const regex = /([A-Za-z\s]+)\s+([-\d.E]+)\s+\([^)]+\)/;
 
@@ -214,14 +210,8 @@ function extractInfo(lines) {
       }
     }
   }
-
   return info;
 }
-
-
-
-
-
 
 
 function findStartIndex(lines) {
@@ -251,12 +241,27 @@ function extractValues(rows) {
   return { x, y1, y2 };
 }
 
-    
-
-  
 
 nextButton.addEventListener('click', plotGraph);
 prevButton.addEventListener('click', plotGraph);
+
+
+// Update the buttons' disabled state initially
+updateButtonState();
+
+function updateButtonState() {
+  if (data_extracted.length <= 1) {
+    prevButton.disabled = true;
+    nextButton.disabled = true;
+    console.log("Buttons disabled")
+  } else {
+    prevButton.disabled = false;
+    nextButton.disabled = false;
+    console.log("Buttons enabled")
+  }
+}
+
+
 
 function plotGraph(event) {
   console.log("Files selected:", read_file);
@@ -271,7 +276,6 @@ function plotGraph(event) {
     if (current_data_index < 0) {
       current_data_index = data_extracted.length - 1;
     }
-
     updatePlot();
   }
 }
@@ -297,7 +301,8 @@ function exportToExcel() {
   const existingSheetNames = []; // Array to store existing sheet names
   
   data_extracted.forEach((data, index) => {
-    const { x, y1, y2, filename } = data;
+    const { x, y1, y2, info } = data;
+    const { filename } = info;
     let sheetName = filename; // Set sheet name equal to the filename
     
     if (sheetName.length > 29) {
@@ -313,10 +318,12 @@ function exportToExcel() {
     }
     
     existingSheetNames.push(sheetName); // Add sheet name to the existing sheet names array
+    const keys = Object.keys(info); // Get the keys from the info dictionary
+    const values = Object.values(info); // Get the values from the info dictionary
     
     const worksheet = XLSX.utils.aoa_to_sheet([
-      ['x', 'y1', 'y2'],
-      ...x.map((value, i) => [value, y1[i], y2[i]])
+      ['x', 'y1', 'y2', 'info-keys','info-values'],
+      ...x.map((value, i) => [value, y1[i], y2[i],keys[i],values[i]])
     ]); // Create worksheet with data
     
     XLSX.utils.book_append_sheet(workbook, worksheet, sheetName); // Add worksheet to workbook
