@@ -135,56 +135,125 @@ function updatePlot() {
 
   console.log("Plot updated!");
 }
-  
+
 fileInput.addEventListener('change', () => {
   const files = fileInput.files;
   current_data_index = 0;
-  const data = [];
+  data_extracted = []; // Reset the data_extracted array
   console.log(files)
 
   for (let i = 0; i < files.length; i++) {
     const reader = new FileReader();
- 
-    reader.onload = (event) => {
-      const result = event.target.result;
-      const lines = result.split('\n');
-      const startIndex = lines.findIndex(line => line.includes('Diameter (µm)\tq (%)\tUndersize (%)'));
-
-      const rows = lines.slice(startIndex + 1).map(line => line.trim().split(/\t|\s+/));
-      const filename = files[i].name.replace(/\.[^/.]+$/, ""); // Extract filename without extension
-      const x = rows.map(row => {
-      const value = parseFloat(row[0]);
-      return isNaN(value) ? 0 : value;
-       });
-
-      const y1 = rows.map(row => {
-      const value = parseFloat(row[1]);
-      return isNaN(value) ? 0 : value;
-      });
-
-      const y2 = rows.map(row => {
-      const value = parseFloat(row[2]);
-      return isNaN(value) ? 0 : value;
-      });
-
-    data.push({
-      x: x,
-      y1: y1,
-      y2: y2,
-      filename: filename
-    });
-
-      if (i == 0) {
-        data_extracted = data; // Assign as array of objects
-        read_file = true;
-        console.log("File(s) read")
-        updatePlot();
-      }
-    };
-
+    reader.onload = handleFileLoad(files[i]);
     reader.readAsText(files[i]);
   }
 });
+
+function handleFileLoad(file) {
+  return (event) => {
+    const filename = file.name.replace(/\.[^/.]+$/, ""); // Extract filename without extension
+    const result = event.target.result;
+    const lines = result.split('\n');
+    const info = extractInfo(lines);
+
+    const startIndex = findStartIndex(lines);
+    const rows = extractRows(lines, startIndex + 1);
+   
+
+    const { x, y1, y2 } = extractValues(rows);
+
+    const data = {
+      filename: filename,
+      info: info,
+      x: x,
+      y1: y1,
+      y2: y2
+      
+    };
+
+    data_extracted.push(data); // Add data to the data_extracted array
+
+    if (data_extracted.length === 1) {
+      read_file = true;
+      console.log("File(s) read");
+      updatePlot();
+    }
+  };
+}
+
+function extractInfo(lines) {
+  const info = {};
+
+  const regex = /([A-Za-z\s]+)\s+([-\d.E]+)\s+\([^)]+\)/;
+
+  const desiredLines = [
+    'Median size',
+    'Mean size',
+    'Variance',
+    'St. Dev.',
+    'Mode size',
+    'D10',
+    'D90',
+    'D(v,0.1)',
+    'D(v,0.5)',
+    'D(v,0.9)',
+    'COV of D(v,0.1)',
+    'COV of D(v,0.5)',
+    'COV of D(v,0.9)'
+  ];
+
+  for (const line of lines) {
+    for (const desiredLine of desiredLines) {
+      if (line.startsWith(desiredLine)) {
+        const match = line.match(regex);
+        if (match) {
+          const [, label, value] = match;
+          info[desiredLine] = parseFloat(value.trim());
+        }
+        break;
+      }
+    }
+  }
+
+  return info;
+}
+
+
+
+
+
+
+
+function findStartIndex(lines) {
+  return lines.findIndex(line => line.includes('Diameter (µm)\tq (%)\tUndersize (%)'));
+}
+
+function extractRows(lines, startIndex) {
+  return lines.slice(startIndex).map(line => line.trim().split(/\s+/));
+}
+
+function extractValues(rows) {
+  const x = [];
+  const y1 = [];
+  const y2 = [];
+  const dataRegex = /^([\d.,-]+)\s+([\d.,-]+)\s+([\d.,-]+)$/;
+
+  for (const row of rows) {
+    const match = row.join(' ').match(dataRegex);
+    if (match) {
+      const [, xValue, y1Value, y2Value] = match;
+      x.push(parseFloat(xValue));
+      y1.push(parseFloat(y1Value));
+      y2.push(parseFloat(y2Value));
+    }
+  }
+
+  return { x, y1, y2 };
+}
+
+    
+
+  
 
 nextButton.addEventListener('click', plotGraph);
 prevButton.addEventListener('click', plotGraph);

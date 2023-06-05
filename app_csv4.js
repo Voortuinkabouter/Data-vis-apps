@@ -135,7 +135,6 @@ function updatePlot() {
 
   console.log("Plot updated!");
 }
-  
 fileInput.addEventListener('change', () => {
   const files = fileInput.files;
   current_data_index = 0;
@@ -150,29 +149,32 @@ fileInput.addEventListener('change', () => {
       const lines = result.split('\n');
       const startIndex = lines.findIndex(line => line.includes('Diameter (µm)\tq (%)\tUndersize (%)'));
 
-      const rows = lines.slice(startIndex + 1).map(line => line.trim().split(/\t|\s+/));
+      const rows = lines.slice(startIndex + 1).map(line => line.trim().split(/\s+/));
       const filename = files[i].name.replace(/\.[^/.]+$/, ""); // Extract filename without extension
-      const x = rows.map(row => {
-      const value = parseFloat(row[0]);
-      return isNaN(value) ? 0 : value;
-       });
 
-      const y1 = rows.map(row => {
-      const value = parseFloat(row[1]);
-      return isNaN(value) ? 0 : value;
+      const dataRegex = /^([\d.,-]+)\s+([\d.,-]+)\s+([\d.,-]+)$/;
+
+      const x = [];
+      const y1 = [];
+      const y2 = [];
+      const info = {};
+
+      for (const row of rows) {
+        const match = row.join(' ').match(dataRegex);
+        if (match) {
+          const [, xValue, y1Value, y2Value] = match;
+          x.push(parseFloat(xValue));
+          y1.push(parseFloat(y1Value));
+          y2.push(parseFloat(y2Value));
+        }
+      }
+
+      data.push({
+        x: x,
+        y1: y1,
+        y2: y2,
+        filename: filename
       });
-
-      const y2 = rows.map(row => {
-      const value = parseFloat(row[2]);
-      return isNaN(value) ? 0 : value;
-      });
-
-    data.push({
-      x: x,
-      y1: y1,
-      y2: y2,
-      filename: filename
-    });
 
       if (i == 0) {
         data_extracted = data; // Assign as array of objects
