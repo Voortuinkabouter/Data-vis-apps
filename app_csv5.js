@@ -1,47 +1,67 @@
-// Get the file input element
-const fileInput = document.getElementById("file-input");
 
 // Get the buttons
+const fileInput = document.getElementById("file-input");
 const prevButton = document.getElementById("prev-button");
 const nextButton = document.getElementById("next-button");
 const saveButton = document.getElementById("save-button");
 const exportButton = document.getElementById("export-button");
 
-// Initialize data variables.
+
+// Initialize data extraction variables.
 let data_extracted= [];
 let current_data_index = 0;
 
-
-const chart = document.getElementById('chart');
-
+//update button state (for css styling  [class]:disabled{etc)
 updateButtonState();
 
+//get the chart
+const chart = document.getElementById('chart');
 
 
-let x_initial=  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-let y_initial= x_initial.map(x => x**2);
-const cumulativeSum = (sum => value => sum += value)(0);
+// Initialize dummy data
+let x_initial = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+let y_initial = x_initial.map(x_initial => x_initial ** 2);
 
+function calcCumulative(array) {
+  const cumulativeSum = [];
+  let sum = 0;
+  for (let i = 0; i < array.length; i++) {
+    sum += array[i];
+    cumulativeSum.push(sum);
+  }
+  return cumulativeSum;
+}
+
+function calcPercent(array) {
+  const totalSum = array[array.length - 1];
+  return array.map(value => (value / totalSum) * 100);
+}
+
+const y_cumulative = calcCumulative(y_initial);
+
+//initialize the plot traces (each trace can contain separate data to plot)
+//Trace1 is used for frequency(%)
 var trace1 = {
   x: x_initial,
-  y: y_initial,
+  y: calcPercent(y_initial),
   type: 'scatter',
   fill: 'tozeroy',
-  line: { color: 'rgb(233,30,99)' },
-  name: 'Fraction (%)' // Updated trace name
+  line: { color: 'rgb(233,30,99)' ,shape: "spline"},
+  name: 'Fraction (%)'
 };
 
+//Trace1 is used for cumulative frequency(%)
 var trace2 = {
   x: x_initial,
-  y: y_initial.map(cumulativeSum),
+  y: calcPercent(y_cumulative),
   type: "scatter",
   mode: "lines",
-  line: { color: 'rgb(33, 150, 243)', shape: "hvh" },
+  line: { color: 'rgb(33, 150, 243)', shape: "vh" },
   yaxis: 'y2',
-  name: 'Cumulative (%)', // Updated trace name
- 
+  name: 'Cumulative (%)',  
 };
 
+//initialize the plot layout
 var layout = {
   title: "Your plot here",
   font: { size: 18 },
@@ -65,7 +85,7 @@ var layout = {
   },
   yaxis: {
     title: 'Fraction (%)', // Updated y-axis title
-    range: [0, 20],
+    range: [0, 100],
     autorange: false,
     showline: true,
     showgrid: false
@@ -111,7 +131,9 @@ function updatePlot() {
       { x: x, y: y2 }
     ],
     layout: {
-      title: info.filename/* , // Assign the title directly
+      title: info.filename,
+      yaxis: {
+        range: [0, 20]}/* , // Assign the title directly
       yaxis: {range :[0, Math.ceil(maxDataValue / 10) * 10]}// Round up to the nearest multiple of 10 */
     }
   // Update the y-axis range in the layout
