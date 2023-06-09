@@ -144,7 +144,6 @@ function updatePlot() {
   
   };
 
-
   Plotly.animate(chart, frame, {
     transition: { duration: 200, easing: 'cubic-in' },
     frame: { duration: 200 }
@@ -239,7 +238,6 @@ function extractInfo(lines,filename) {
   return info;
 }
 
-
 function findStartIndex(lines) {
   return lines.findIndex(line => line.includes('Diameter (µm)\tq (%)\tUndersize (%)'));
 }
@@ -270,6 +268,8 @@ function extractValues(rows) {
 
 nextButton.addEventListener('click', plotGraph);
 prevButton.addEventListener('click', plotGraph);
+saveButton.addEventListener('click', saveAllPlots);
+exportButton.addEventListener('click', exportToExcel);
 
 
 // Update the buttons' disabled state initially
@@ -287,7 +287,6 @@ function updateButtonState() {
   }
 }
 
-
 function plotGraph(event) {
   console.log("Files selected:", read_file);
 
@@ -304,34 +303,7 @@ function plotGraph(event) {
     updatePlot();
   }
 }
-saveButton.addEventListener('click', () => {
-  // Update the legend position in the layout for the saved file
-  layout.legend.x = 0.65;
-  layout.legend.y = 0.9;
-  layout.legend.font = { size: 16 };
 
-  Plotly.newPlot('chart', initial_data, layout, config).then(() => {
-    Plotly.toImage(chart, { format: 'svg' })
-      .then(function (dataUrl) {
-        var link = document.createElement('a');
-        link.href = dataUrl;
-        link.download = 'plot.svg';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        // Restore the original legend position after saving
-        layout.legend.x = 0.75;
-        layout.legend.y = 1;
-        Plotly.newPlot('chart', initial_data, layout, config);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-  });
-});
-
-exportButton.addEventListener('click', exportToExcel);
 function exportToExcel() {
   const workbook = XLSX.utils.book_new(); // Create a new workbook
   const existingSheetNames = []; // Array to store existing sheet names
@@ -376,3 +348,65 @@ function exportToExcel() {
   const filename = `SLS_export_${formattedDate}.xlsx`;
   XLSX.writeFile(workbook, filename); // Save the workbook as a file
 }  
+
+function saveAllPlots() {
+  // Update the legend position in the layout for the saved file
+  layout.legend.x = 0.65;
+  layout.legend.y = 0.9;
+  layout.legend.font = { size: 16 };
+
+  const promises = [];
+
+  data_extracted.forEach((data, index) => {
+    const { x, y1, y2, info } = data;
+    const { filename } = info;
+
+    // Create a new chart container for each plot
+    const chartContainer = document.createElement('div');
+    document.body.appendChild(chartContainer);
+
+    // Clone the initial_data array to avoid modifying the original data
+    const plotData = JSON.parse(JSON.stringify(initial_data));
+    
+
+        // Use the extracted data if any files were selected
+    
+    plotData[0].x = x;
+    plotData[0].y = y1;
+    plotData[1].x = x;
+    plotData[1].y = y2;
+      
+      
+    // Create a new promise for each plot
+    const promise = new Promise((resolve, reject) => {
+      Plotly.newPlot(chartContainer, plotData, layout, config).then(() => {
+        Plotly.toImage(chartContainer, { format: 'svg' })
+          .then(function (dataUrl) {
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = `${filename}_${index}.svg`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            resolve();
+          })
+          .catch(function (error) {
+            reject(error);
+          });
+      });
+    });
+
+    promises.push(promise);
+  });
+
+  // Wait for all promises to resolve
+  Promise.all(promises)
+    .then(() => {
+      // Restore the original legend position after saving
+      layout.legend.x = 0.75;
+      layout.legend.y = 1;
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+}
