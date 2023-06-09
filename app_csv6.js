@@ -1,4 +1,5 @@
 
+//*** On page load ***//
 // Get the buttons
 const fileInput = document.getElementById("file-input");
 const prevButton = document.getElementById("prev-button");
@@ -6,6 +7,8 @@ const nextButton = document.getElementById("next-button");
 const saveButton = document.getElementById("save-button");
 const exportButton = document.getElementById("export-button");
 
+//get the chart
+const chart = document.getElementById('chart');
 
 // Initialize data extraction variables.
 let data_extracted= [];
@@ -14,14 +17,7 @@ let current_data_index = 0;
 //update button state (for css styling  [class]:disabled{etc)
 updateButtonState();
 
-//get the chart
-const chart = document.getElementById('chart');
-
-
-// Initialize dummy data
-let x_initial = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-let y_initial = x_initial.map(x_initial => x_initial ** 2);
-
+// Math functions to calculate x and y data if neccesary
 function calcCumulative(array) {
   const cumulativeSum = [];
   let sum = 0;
@@ -31,94 +27,113 @@ function calcCumulative(array) {
   }
   return cumulativeSum;
 }
-
 function calcPercent(array) {
   const totalSum = array[array.length - 1];
   return array.map(value => (value / totalSum) * 100);
 }
 
-const y_cumulative = calcCumulative(y_initial);
+// Initialize the dummy x, y data, and all Plotly setup: Trace1, Trace2, Layout, Config and create an object.
+function initializePlot() {
+  // Initialize dummy data
+  let x_initial = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  let y_initial = x_initial.map(x_initial => x_initial ** 2);
 
-//initialize the plot traces (each trace can contain separate data to plot)
-//Trace1 is used for frequency(%)
-var trace1 = {
-  x: x_initial,
-  y: calcPercent(y_initial),
-  type: 'scatter',
-  fill: 'tozeroy',
-  line: { color: 'rgb(233,30,99)' ,shape: "spline"},
-  name: 'Fraction (%)'
-};
+  const y_cumulative = calcCumulative(y_initial);
 
-//Trace1 is used for cumulative frequency(%)
-var trace2 = {
-  x: x_initial,
-  y: calcPercent(y_cumulative),
-  type: "scatter",
-  mode: "lines",
-  line: { color: 'rgb(33, 150, 243)', shape: "spline" },
-  yaxis: 'y2',
-  name: 'Cumulative (%)',  
-};
+  // Initialize the plot traces (each trace can contain separate data to plot)
+  var trace1 = {
+    x: x_initial,
+    y: calcPercent(y_initial),
+    type: 'scatter',
+    fill: 'tozeroy',
+    line: { color: 'rgb(233,30,99)' ,shape: "spline"},
+    name: 'Fraction (%)'
+  };
 
-//initialize the plot layout
-var layout = {
-  font: { size: 16 },
-  title: {text: "Your plot here", font:{size:20}},
-  autosize: true,
-  paper_bgcolor: "rgba(0,0,0,0)",
-  plot_bgcolor: "rgba(0,0,0,0)",
-  margin: {
-    l: 80,
-    r: 80,
-    b: 80,
-    t: 80,
-    pad: 0
-  },
-  legend: {
-    x: 0.75,
-    y: 1
-  },
-  xaxis: {
-    type: 'log',
-    title: 'Diameter (µm)',
-    range: [Math.log10(0.01), Math.log10(10000)],
-    autorange: false,
-    showline: true,
-    showgrid: false
-  },
-  yaxis: {
-    title: 'Fraction (%)', // Updated y-axis title
-    range: [0, 100],
-    autorange: false,
-    showline: true,
-    showgrid: false
-  },
-  yaxis2: {
-   /*  title: 'Cumulative (%)', */ // Empty y-axis title
-    overlaying: 'y',
-    side: 'right',
-    range: [0, 100],
-    autorange: false,
-    showline: true,
-    showgrid: false,
-    zeroline: false,
-    showticklabels: true,
-    tickmode: 'linear',
-    tick0: 0,
-    dtick: 20
-  }
-};
+  var trace2 = {
+    x: x_initial,
+    y: calcPercent(y_cumulative),
+    type: "scatter",
+    mode: "lines",
+    line: { color: 'rgb(33, 150, 243)', shape: "spline" },
+    yaxis: 'y2',
+    name: 'Cumulative (%)',  
+  };
 
-var config = {
-  responsive: true,
-  displayModeBar: false
+  // Initialize the plot layout
+  var layout = {
+    font: { size: 16 },
+    title: {text: "Your plot here", font:{size:20}},
+    autosize: true,
+    paper_bgcolor: "rgba(0,0,0,0)",
+    plot_bgcolor: "rgba(0,0,0,0)",
+    margin: {
+      l: 80,
+      r: 80,
+      b: 80,
+      t: 80,
+      pad: 0
+    },
+    legend: {
+      x: 0.75,
+      y: 1
+    },
+    xaxis: {
+      type: 'log',
+      title: 'Diameter (µm)',
+      range: [Math.log10(0.01), Math.log10(10000)],
+      autorange: false,
+      showline: true,
+      showgrid: false
+    },
+    yaxis: {
+      title: 'Fraction (%)',
+      range: [0, 100],
+      autorange: false,
+      showline: true,
+      showgrid: false
+    },
+    yaxis2: {
+      overlaying: 'y',
+      side: 'right',
+      range: [0, 100],
+      autorange: false,
+      showline: true,
+      showgrid: false,
+      zeroline: false,
+      showticklabels: true,
+      tickmode: 'linear',
+      tick0: 0,
+      dtick: 20
+    }
+  };
+
+  var config = {
+    responsive: true,
+    displayModeBar: false
+  };
+
+  var initial_data = [trace1, trace2];
+
+  return {
+    layout: layout,
+    config: config,
+    trace1: trace1,
+    trace2: trace2,
+    initial_data: initial_data
+  };
 }
 
-// Plot the initial empty chart
-var initial_data = [trace1, trace2];
+// Call the function and store the returned object and create a new plotly plot object
+let PlotData = initializePlot();
+Plotly.newPlot('chart', PlotData.initial_data, PlotData.layout, PlotData.config);
 
-Plotly.newPlot('chart', initial_data, layout, config);
+//********************//
+
+
+
+
+//Updates only the data, x,y,y2 and some layout updates like title and fontsize
 function updatePlot() { 
   console.log(data_extracted[current_data_index])
   const{x, y1, y2, info} = data_extracted[current_data_index];
@@ -154,6 +169,11 @@ function updatePlot() {
 
   console.log("Plot updated!");
 }
+
+
+
+
+//*** On file change, Browse button ***//
 
 fileInput.addEventListener('change', () => {
   const files = fileInput.files;
@@ -200,6 +220,8 @@ function handleFileLoad(file) {
     updateButtonState();
   };
 }
+
+//*** Functions inside handleFileLoad ***//
 
 function extractInfo(lines,filename) {
   const info = {};
@@ -264,8 +286,10 @@ function extractValues(rows) {
 
   return { x, y1, y2 };
 }
+//*************************************//
 
 
+//*** ALl other button related functions ***//
 nextButton.addEventListener('click', plotGraph);
 prevButton.addEventListener('click', plotGraph);
 saveButton.addEventListener('click', saveAllPlots);
@@ -351,9 +375,11 @@ function exportToExcel() {
 
 function saveAllPlots() {
   // Update the legend position in the layout for the saved file
-  layout.legend.x = 0.65;
-  layout.legend.y = 0.9;
-  layout.legend.font = { size: 16 };
+console.log(PlotData.layout.legend.x)
+
+  PlotData.layout.legend.x = 0.65;
+  PlotData.layout.legend.y = 0.9;
+  PlotData.layout.legend.font = { size: 16 };
 
   const promises = [];
 
@@ -366,7 +392,7 @@ function saveAllPlots() {
     document.body.appendChild(chartContainer);
 
     // Clone the initial_data array to avoid modifying the original data
-    const plotData = JSON.parse(JSON.stringify(initial_data));
+    const plotData = JSON.parse(JSON.stringify(PlotData.initial_data));
     
 
         // Use the extracted data if any files were selected
@@ -379,7 +405,7 @@ function saveAllPlots() {
       
     // Create a new promise for each plot
     const promise = new Promise((resolve, reject) => {
-      Plotly.newPlot(chartContainer, plotData, layout, config).then(() => {
+      Plotly.newPlot(chartContainer, plotData, PlotData.layout, PlotData.config).then(() => {
         Plotly.toImage(chartContainer, { format: 'svg' })
           .then(function (dataUrl) {
             const link = document.createElement('a');
@@ -403,8 +429,8 @@ function saveAllPlots() {
   Promise.all(promises)
     .then(() => {
       // Restore the original legend position after saving
-      layout.legend.x = 0.75;
-      layout.legend.y = 1;
+      PlotData.layout.legend.x = 0.75;
+      PlotData.layout.legend.y = 1;
     })
     .catch(function (error) {
       console.error(error);
