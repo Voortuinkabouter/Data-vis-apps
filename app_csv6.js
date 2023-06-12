@@ -131,8 +131,6 @@ Plotly.newPlot('chart', PlotData.initial_data, PlotData.layout, PlotData.config)
 //********************//
 
 
-
-
 //Updates only the data, x,y,y2 and some layout updates like title and fontsize
 function updatePlot() { 
   console.log(data_extracted[current_data_index])
@@ -169,8 +167,6 @@ function updatePlot() {
 
   console.log("Plot updated!");
 }
-
-
 
 
 //*** On file change, Browse button ***//
@@ -414,6 +410,8 @@ console.log(PlotData.layout.legend.x)
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            document.body.removeChild(chartContainer); // Remove the chart container after saving
+          
             resolve();
           })
           .catch(function (error) {
