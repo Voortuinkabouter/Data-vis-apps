@@ -1,0 +1,403 @@
+* {
+    box-sizing: border-box;
+}
+
+/* .chart-container {
+    width: 100%;
+    height: 50vh;
+    border: 3px solid var(--neutral-darker);
+    border-radius: 25px;
+    padding: 2rem;
+
+    background-color: #2196f3;
+} */
+
+/* Define dark mode colors */
+:root {
+
+    --text-color: #00030a;
+
+
+    --primary-lighter: hsl(224, 100%, 90%);
+    --primary-light: hsl(180, 100%, 0%);
+
+
+    --primary-light: #3369ff;
+    --primary-color: #123eb7;
+    --primary-dark: #002484;
+
+    --accent-lighter: hsl(24, 92%, 73%);
+    --accent-color: #f57118;
+
+    --theme-color-1: #2ea339;
+    --theme-color-2: #66becc;
+    --theme-color-3: #8d70cc;
+    --theme-color-4: #f5c814;
+
+
+
+    --font-family-1-light: "FSMe-Light", sans-serif;
+    --font-family-1: "FSMe", sans-serif;
+    --font-family-1-bold: "FSMe-Bold", sans-serif;
+
+
+    --font-family-2: "ObjectSans-Regular", sans-serif;
+    --font-family-2-bold: "ObjectSans-Heavy", sans-serif;
+    --font-family-2-slanted: "ObjectSans-Slanted", sans-serif;
+    --font-family-2-slanted-bold: "ObjectSans-HeavySlanted", sans-serif;
+
+
+
+    /* 
+    --font-family-0: "Roboto", sans-serif;
+    --font-family-0: "Open Sans", sans-serif;
+    --font-family-0: 'Poiret One', cursive;
+    --font-family-0: 'Shrikhand', cursive;
+ */
+
+    --font-weight-light: 300;
+    --font-weight-regular: 500;
+    --font-weight-semi-bold: 700;
+    --font-weight-bold: 900;
+
+
+    --neutral-light: #ffffff;
+    --neutral-color: #f0f3fa;
+    --neutral-dark: #00030a;
+
+
+    --graph-padding: 0px;
+}
+
+
+
+/*Utility */
+bold {
+    font-weight: var(--font-weight-bold);
+}
+
+
+.text-accent {
+    color: var(--accent-color);
+}
+
+.text-primary {
+    color: var(--primary-color);
+}
+
+.text-secondary {
+    color: var(--accent-color);
+}
+
+/*Layout*/
+.chart-container {
+    background-color: white;
+    width: 100%;
+    height: 48vh;
+    border: 3px solid var(--neutral-darker);
+    border-radius: 10px;
+
+
+    /*  padding: var(--graph-padding); */
+}
+
+
+
+
+body {
+    color: var(--text-color);
+    margin: 0 auto;
+
+}
+
+* {
+    font-family: var(--font-family-2-slanted)
+}
+
+
+header {
+    background-color: var(--primary-color);
+    color: var(--neutral-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    width: 200px;
+    filter: brightness(0) invert(1);
+    margin-left: 1rem;
+
+
+}
+
+/* Style the navbar with a gradient background and some padding */
+.navbar {
+    padding: 5px;
+    margin: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-filler {
+    width: 250px;
+    margin-right: 1rem;
+}
+
+/* Center the container and give it some margin */
+.container {
+    position: relative;
+    max-width: 1900px;
+    margin: auto auto auto auto;
+    background-color: var(--neutral-light);
+
+}
+
+.container::before {
+    position: absolute;
+    left: 0%;
+    right: 0;
+    top: 0;
+    content: '';
+    z-index: -1;
+    height: 100%;
+    width: 50%;
+    background-color: aqua;
+    box-shadow: 0px 0px 10px 5px var(--primary-color);
+}
+
+.container::after {
+    position: absolute;
+    left: 50%;
+    right: 0;
+    top: 0;
+    content: '';
+    z-index: -1;
+    height: 100%;
+    width: 50%;
+    box-shadow: 0px 0px 10px 5px var(--accent-color);
+
+}
+
+
+
+main {
+    background-color: var(--neutral-light);
+}
+
+
+
+
+footer {
+    border-top: 2px solid var(--primary-light);
+    /*  border-bottom: 2px solid var(--accent-color); */
+    background-color: var(--neutral-color);
+    padding: 30px;
+    font-family: var(--font-family-1);
+    font-size: 16px;
+    color: var(--neutral-dark);
+}
+
+/* Apply dark mode colors to the body and other elements */
+
+h1 {
+    font-family: var(--font-family-2-slanted-bold);
+    font-size: 36px;
+    text-align: center;
+}
+
+
+/* Style the app-container with a flex layout and some gap */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+}
+
+
+/*Chart */
+.chart {
+    width: calc(100%- var(--graph-padding));
+    height: 100%;
+    overflow: hidden;
+    overflow-wrap: unset;
+    clip-path: polygon(1% 0%, 99% 0%, 100% 1%, 100% 99%, 99% 100%, 1% 100%, 0% 99%, 0% 1%);
+    border-radius: 25px;
+}
+
+
+
+/* Style the chart-card with a box shadow and some padding */
+.chart-card {
+    box-shadow: 0 0 10px var(--neutral-light);
+    padding: 0 20px 20px 20px;
+    background-color: var(--neutral-darker);
+    clip-path: polygon(1% 0%, 99% 0%, 100% 1%, 100% 99%, 99% 100%, 1% 100%, 0% 99%, 0% 1%);
+}
+
+.chart-card h1 {
+    text-align: left;
+    font-family: var(--font-family-2);
+    font-weight: var(--font-weight-bold);
+}
+
+.chart-card p {
+    font-family: var(--font-family-1);
+    font-weight: var(--font-weight-regular);
+    font-size: 18px;
+
+}
+
+/*Buttons*/
+
+.inputbutton-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-family: var(--font-family-2);
+    font-weight: var(--font-weight-regular);
+    font-size: 24px;
+}
+
+input {
+    font-family: var(--font-family-2);
+    font-weight: var(--font-weight-light);
+    font-size: 18px;
+}
+
+input[type=file]::file-selector-button {
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    transition: .3s;
+    font-family: var(--font-family-1);
+    margin-right: 20px;
+
+
+}
+
+input[type=file]::file-selector-button:hover {
+    background-color: var(--text-color);
+    color: var(--accent-color);
+    cursor: pointer;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+}
+
+.save,
+.next,
+.previous {
+    appearance: none;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    color: var(--neutral-light);
+    padding: 10px;
+    cursor: pointer;
+    display: inline-block;
+    min-width: 10rem;
+    font-family: var(--font-family-2);
+    font-size: 1.1rem;
+
+    overflow: hidden;
+    /* text-overflow: ellipsis; */
+}
+
+.next,
+.previous {
+    background-color: var(--accent-color);
+    color: var(--neutral-light);
+}
+
+.previous {
+    margin-left: auto;
+    margin-right: 1rem;
+}
+
+.save {
+    margin-right: 1rem;
+}
+
+
+.save:hover,
+.next:hover,
+.previous:hover {
+    transform: scale(1.05);
+    transition-duration: .3s;
+    cursor: pointer;
+}
+
+.save:hover {
+    background-color: var(--neutral-light);
+    color: var(--primary-light);
+    border: 1px solid var(--primary-light);
+}
+
+.next:hover,
+.previous:hover {
+    transform: translateX(2px);
+    background-color: var(--neutral-light);
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+}
+
+.previous:hover {
+    transform: translateX(-2px);
+}
+
+
+.next:disabled,
+.previous:disabled {
+    opacity: 0.5;
+    cursor: pointer;
+    /* Disable pointer events on disabled buttons */
+}
+
+.next:disabled:hover,
+.previous:disabled:hover {
+    opacity: 0.5;
+    cursor: pointer;
+    transform: scale(1);
+    transition-duration: 0;
+    background-color: var(--accent-color);
+    color: var(--neutral-light);
+}
+
+
+@media screen and (max-width: 600px) {
+
+    .buttons-container {
+        display: grid;
+        gap: 1rem;
+        margin: 0 0 0 0;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            'previous next'
+            'save save';
+    }
+
+    .buttons-container>button:nth-of-type(1) {
+        grid-area: save;
+    }
+
+    .buttons-container>button:nth-of-type(2) {
+        margin: 0 0;
+        grid-area: previous;
+
+    }
+
+    .buttons-container>button:nth-of-type(3) {
+
+        grid-area: next;
+
+    }
+}
