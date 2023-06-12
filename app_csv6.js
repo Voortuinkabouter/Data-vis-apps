@@ -6,9 +6,24 @@ const prevButton = document.getElementById("prev-button");
 const nextButton = document.getElementById("next-button");
 const saveButton = document.getElementById("save-button");
 const exportButton = document.getElementById("export-button");
+const fileText = document.getElementById("file-text");
 
 //get the chart
 const chart = document.getElementById('chart');
+
+// Set the displayed button text to "Choose Files, regardless of browser"
+
+
+
+// Detect the browser and set the paragraph text accordingly
+const isFirefox = typeof InstallTrigger !== 'undefined'; // Check if the browser is Firefox
+if (isFirefox) {
+  fileText.textContent = '"Browse"';
+} else {
+  fileText.textContent = '"Choose Files"';
+}
+
+
 
 // Initialize data extraction variables.
 let data_extracted= [];
@@ -139,9 +154,15 @@ function updatePlot() {
   console.log("y1", y1)
   console.log("y2", y2)
   console.log("title", info.filename)
-  const maxDataValue = Math.max(...y1, ...y2); // Find the maximum value from y1 and y2
-   
- 
+  console.log(info.distributionBase)
+/*   const maxDataValue = Math.max(...y1, ...y2); // Find the maximum value from y1 and y2 */
+  let yaxisTitle = ''
+  if (info.distributionBase === "Number"){ yaxisTitle = 'Fraction (%)'}
+  
+    else if  (info.distributionBase === "Volume"){ yaxisTitle = 'Volume (%)'}  
+
+  PlotData.trace1.name = yaxisTitle
+
   var frame = {
     data: [
       { x: x, y: y1 },
@@ -150,6 +171,7 @@ function updatePlot() {
     layout: {
       title: {text: info.filename, font:{size:16}},
       yaxis: {
+        title: yaxisTitle,
         range: [0, 20]}/* , // Assign the title directly
       yaxis: {range :[0, Math.ceil(maxDataValue / 10) * 10]}// Round up to the nearest multiple of 10 */
     }
@@ -225,6 +247,7 @@ function extractInfo(lines,filename) {
 
   const regex = /([A-Za-z\s]+)\s+([-\d.E]+)\s+\([^)]+\)/;
 
+
   const desiredLines = [
     'Median size',
     'Mean size',
@@ -238,18 +261,27 @@ function extractInfo(lines,filename) {
     'D(v,0.9)',
     'COV of D(v,0.1)',
     'COV of D(v,0.5)',
-    'COV of D(v,0.9)'
+    'COV of D(v,0.9)',
+    'Distribution base'
+    
   ];
 
   for (const line of lines) {
     for (const desiredLine of desiredLines) {
       if (line.startsWith(desiredLine)) {
+        if (desiredLine === 'Distribution base') {
+          console.log("line logged")
+          info.distributionBase= line.split('\t')[1].trim();
+        }
+        else{
+
         const match = line.match(regex);
         if (match) {
           const [, label, value] = match;
           info[desiredLine] = parseFloat(value.trim());
         }
         break;
+      }
       }
     }
   }
