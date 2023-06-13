@@ -16,19 +16,19 @@
 /* Define dark mode colors */
 :root {
 
-    --text-color: #00030a;
+    --text-color: rgb(0, 3, 10);
 
 
     --primary-lighter: hsl(224, 100%, 90%);
     --primary-light: hsl(180, 100%, 0%);
 
 
-    --primary-light: #3369ff;
+    --primary-light: rgb(51, 105, 255);
     --primary-color: #123eb7;
     --primary-dark: #002484;
 
     --accent-lighter: hsl(24, 92%, 73%);
-    --accent-color: #f57118;
+    --accent-color: rgb(245, 113, 24);
 
     --theme-color-1: #2ea339;
     --theme-color-2: #66becc;

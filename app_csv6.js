@@ -54,14 +54,19 @@ function initializePlot() {
   let y_initial = x_initial.map(x_initial => x_initial ** 2);
 
   const y_cumulative = calcCumulative(y_initial);
-
+  const minorGridlinePositions = [
+    0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, // Between 0.1 and 1
+    2, 3, 4, 5, 6, 7, 8, 9, // Between 1 and 10
+    20, 30, 40, 50, 60, 70, 80, 90, // Between 10 and 100
+    200, 300, 400, 500, 600, 700, 800, 900 // Between 100 and 1000
+  ];
   // Initialize the plot traces (each trace can contain separate data to plot)
   var trace1 = {
     x: x_initial,
     y: calcPercent(y_initial),
     type: 'scatter',
     fill: 'tozeroy',
-    line: { color: 'rgb(233,30,99)' ,shape: "spline"},
+    line: { color: 'rgb(51, 105, 255)' ,shape: "spline"},
     name: 'Fraction (%)'
   };
 
@@ -70,10 +75,39 @@ function initializePlot() {
     y: calcPercent(y_cumulative),
     type: "scatter",
     mode: "lines",
-    line: { color: 'rgb(33, 150, 243)', shape: "spline" },
+    line: { color: 'rgb(0, 3, 10)', shape: "spline"},
     yaxis: 'y2',
     name: 'Cumulative (%)',  
   };
+
+  var trace2 = {
+    x: x_initial,
+    y: calcPercent(y_cumulative),
+    type: "scatter",
+    mode: "lines",
+    line: { color: 'rgb(0, 3, 10)', shape: "spline"},
+    yaxis: 'y2',
+    name: 'Cumulative (%)',  
+  };
+
+
+  var trace3 = {
+    x: minorGridlinePositions.map(Math.log10),
+    y: [0, 100], // Adjust the y-axis range as needed
+    type: 'bar',
+    marker: {
+      color: 'lightgray',
+      line: {
+        width: 1,
+        color: 'lightgray'
+      }
+    },
+    hoverinfo: 'skip',
+    showlegend: false,
+    xaxis: 'x',
+    yaxis: 'y'
+  };
+
 
   // Initialize the plot layout
   var layout = {
@@ -81,7 +115,8 @@ function initializePlot() {
     title: {text: "Your plot here", font:{size:20}},
     autosize: true,
     paper_bgcolor: "rgba(0,0,0,0)",
-    plot_bgcolor: "rgba(0,0,0,0)",
+    showline: true,
+        plot_bgcolor: "rgba(0,0,0,0)",
     margin: {
       l: 80,
       r: 80,
@@ -96,17 +131,41 @@ function initializePlot() {
     xaxis: {
       type: 'log',
       title: 'Diameter (µm)',
-      range: [Math.log10(0.01), Math.log10(10000)],
+      range: [Math.log10(0.1), Math.log10(5000)],
       autorange: false,
       showline: true,
-      showgrid: false
-    },
+      showgrid: true,
+      tickmode: 'array',
+      ticklen: 10,
+      tickwidth: .7,
+      mirror:true,
+      dtick: 1,
+      tickvals: minorGridlinePositions,
+      grid: {
+        tickmode: "array",
+        
+      },
+     
+      
+      
+    
+    }/* ,
+    xaxis2: {
+      title: 'yaxis whooo',
+      side:'top',
+      ticklen: 10,
+      tickwidth: 1,
+      showgrid: true,
+      showline: true
+    } */,
     yaxis: {
       title: 'Fraction (%)',
       range: [0, 100],
       autorange: false,
       showline: true,
-      showgrid: false
+      showgrid: false,
+      ticklen: 10,
+      tickwidth: .7,
     },
     yaxis2: {
       overlaying: 'y',
@@ -119,7 +178,9 @@ function initializePlot() {
       showticklabels: true,
       tickmode: 'linear',
       tick0: 0,
-      dtick: 20
+      dtick: 20,
+      ticklen: 10,
+      tickwidth: 1,
     }
   };
 
@@ -128,7 +189,7 @@ function initializePlot() {
     displayModeBar: false
   };
 
-  var initial_data = [trace1, trace2];
+  var initial_data = [trace1, trace2,trace3];
 
   return {
     layout: layout,
