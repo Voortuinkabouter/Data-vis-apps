@@ -24,7 +24,7 @@ if (isFirefox) {
 }
 
 
-
+//new
 // Initialize data extraction variables.
 let data_extracted= [];
 let current_data_index = 0;
