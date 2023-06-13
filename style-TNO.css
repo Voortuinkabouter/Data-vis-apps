@@ -19,49 +19,56 @@
     --text-color: #00030a;
 
 
-    --primary-lighter: hsl(224, 100%, 90%);
-    --primary-light: hsl(180, 100%, 0%);
+    /*    --primary-lighter: hsl(224, 100%, 90%);
+    --primary-light: hsl(180, 100%, 0%); */
 
 
-    --primary-light: #3369ff;
-    --primary-color: #123eb7;
-    --primary-dark: #002484;
+    --primary-light: rgb(51, 105, 255);
+    --primary-color: rgb(18, 61, 181);
+    --primary-dark: hsl(224, 100%, 26%);
 
-    --accent-lighter: hsl(24, 92%, 73%);
-    --accent-color: #f57118;
-
-    --theme-color-1: #2ea339;
-    --theme-color-2: #66becc;
-    --theme-color-3: #8d70cc;
-    --theme-color-4: #f5c814;
+    --primary-darker: hsl(242, 55%, 21%);
+    --primary-lighter: hsl(221, 42%, 49%);
 
 
+
+    --accent-HR: rgb(249, 173, 123);
+
+    --accent-color: rgb(245, 113, 24);
+    --accent-color-light: rgb(246, 139, 71);
+    --accent-color-lighter: rgb(254, 222, 199);
+
+    --theme-color-1: hsl(126, 56%, 41%);
+    --theme-color-1-dark: hsl(147, 80%, 25%);
+
+    --theme-color-2-light: hsl(191, 46%, 84%);
+    --theme-color-2: hsl(188, 50%, 60%);
+    --theme-color-2-dark: hsl(188, 22%, 64%);
+
+    --theme-color-3-light: hsl(258, 33%, 80%);
+    --theme-color-3: hsl(259, 47%, 62%);
+    --theme-color-3-dark: hsl(256, 39%, 44%);
+
+
+    --theme-color-4: hsl(48, 92%, 52%);
+    --theme-color-4-dark: hsl(45, 60%, 46%);
+
+
+    --neutral-light: rgb(255, 255, 255);
+    --neutral-grey-lighter: rgb(240, 243, 250);
+    --neutral-grey: rgb(227, 227, 227);
+    --neutral-grey-darker: rgb(192, 192, 192);
+    --neutral-dark: #00030a;
 
 
     --font-family-1: 'Montserrat', sans-serif;
     --font-family-2: 'PT Sans', sans-serif;
     --font-family-3: 'Bruno Ace SC', cursive;
 
-
-
-
-
-    /* 
-    --font-family-0: "Roboto", sans-serif;
-    --font-family-0: "Open Sans", sans-serif;
-    --font-family-0: 'Poiret One', cursive;
-    --font-family-0: 'Shrikhand', cursive;
- */
-
     --font-weight-light: 300;
     --font-weight-regular: 500;
     --font-weight-semi-bold: 700;
     --font-weight-bold: 900;
-
-
-    --neutral-light: #ffffff;
-    --neutral-color: #f0f3fa;
-    --neutral-dark: #00030a;
 
 
     --graph-padding: 0px;
@@ -209,6 +216,51 @@ h1 {
     justify-content: flex-end;
 }
 
+/* Style the introduction with a box shadow and some padding */
+.introduction {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    /*   box-shadow: 0 0 10px var(--neutral-light);
+    padding: 0 20px 20px 20px;
+    background-color: var(--neutral-darker);
+    clip-path: polygon(1% 0%, 99% 0%, 100% 1%, 100% 99%, 99% 100%, 1% 100%, 0% 99%, 0% 1%); */
+}
+
+.introduction h1 {
+
+    font-family: var(--font-family-1);
+    font-weight: var(--font-weight-bold);
+    margin-top: 40px;
+    margin-right: auto;
+    margin-left: 1rem;
+}
+
+.introduction p {
+    font-family: var(--font-family-2);
+    font-weight: var(--font-weight-light);
+    font-size: 18px;
+    text-align: justify;
+    width: 100%;
+    padding: 0 1rem;
+}
+
+.chart-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 20px;
+    /*  background-color: var(--neutral-grey-lighter); */
+    /*    border-top: 1px solid var(--primary-light); */
+}
+
+
+
 /*Layout*/
 .chart-container {
     background-color: white;
@@ -231,45 +283,34 @@ h1 {
 
 
 
-/* Style the chart-card with a box shadow and some padding */
-.chart-card {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-    /*   box-shadow: 0 0 10px var(--neutral-light);
-    padding: 0 20px 20px 20px;
-    background-color: var(--neutral-darker);
-    clip-path: polygon(1% 0%, 99% 0%, 100% 1%, 100% 99%, 99% 100%, 1% 100%, 0% 99%, 0% 1%); */
-}
 
-.chart-card h1 {
-
-    font-family: var(--font-family-1);
-    font-weight: var(--font-weight-bold);
-    margin-top: 40px;
-    margin-right: auto;
-    margin-left: 1rem;
-}
-
-.chart-card p {
-    font-family: var(--font-family-2);
-    font-weight: var(--font-weight-light);
-    font-size: 18px;
-    text-align: justify;
-    width: 100%;
-    padding: 0 1rem;
-}
 
 footer {
-    border-top: 2px solid var(--primary-light);
+    /*     border-top: 1px solid var(--primary-color); */
     /*  border-bottom: 2px solid var(--accent-color); */
-    background-color: var(--neutral-color);
+    /*   background-color: var(--neutral-grey-lighter); */
     padding: 30px;
     font-family: var(--font-family-1);
     font-size: 16px;
     color: var(--neutral-dark);
+}
+
+footer p span {
+    border-bottom: 4px solid var(--primary-color);
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    width: 100%;
+
+}
+
+footer p span a {
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+footer p span a:hover {
+    color: var(--primary-light);
+    cursor: pointer;
 }
 
 
@@ -293,7 +334,7 @@ input {
 }
 
 input[type=file]::file-selector-button {
-    border: 1px solid var(--neutral-light);
+    border: 1px solid var(--accent-color);
     padding: 10px;
     border-radius: 10px;
     background-color: var(--accent-color);
@@ -376,8 +417,8 @@ input[type=file]::file-selector-button:hover {
     border: 1px solid var(--theme-color-2);
 }
 
-.previous,
-.previous:disabled:hover {
+
+.previous {
     background-color: var(--theme-color-3);
     color: var(--neutral-light);
 }
@@ -388,8 +429,14 @@ input[type=file]::file-selector-button:hover {
     border: 1px solid var(--theme-color-3);
 }
 
-.next,
-.next:disabled:hover {
+.previous:disabled,
+.previous:disabled:hover {
+    background-color: var(--theme-color-3-dark);
+    border: 1px solid var(--theme-color-3-dark);
+    color: var(--neutral-light);
+}
+
+.next {
     background-color: var(--theme-color-4);
     color: var(--neutral-light);
 }
@@ -399,6 +446,14 @@ input[type=file]::file-selector-button:hover {
     color: var(--theme-color-4);
     border: 1px solid var(--theme-color-4);
 }
+
+.next:disabled,
+.next:disabled:hover {
+    background-color: var(--theme-color-4-dark);
+    border: 1px solid var(--theme-color-4-dark);
+    color: var(--neutral-light);
+}
+
 
 
 /***BUTTONS***Animations*******************************************************************************/
@@ -435,6 +490,10 @@ input[type=file]::file-selector-button:hover {
 }
 
 
+
+
+
+
 @media screen and (max-width: 600px) {
 
     /*Layout*/
@@ -454,8 +513,7 @@ input[type=file]::file-selector-button:hover {
         gap: 1rem;
         margin: 0 0 0 0;
         grid-template-columns: 1fr 1fr;
-        grid-template-areas:
-            'previous next'
+        grid-template-areas: 'previous next'
             'save save';
     }
 
@@ -470,8 +528,6 @@ input[type=file]::file-selector-button:hover {
     }
 
     .buttons-container>button:nth-of-type(3) {
-
         grid-area: next;
-
     }
 }

@@ -34,7 +34,7 @@
         <main>
             <div class="app-container">
 
-                <div class="chart-card">
+                <div class="introduction">
                     <h1>Plot a Graph!</h1>
                     <p>Press the <bold class="text-accent button-font" id="file-text">Choose Files</bold>
                         button and select one
@@ -56,23 +56,24 @@
                         cumulative (%) and other info.</p>
 
 
+                    <div class="chart-card">
+                        <div class="inputbutton-container">
+                            <label class="inputlabel" for="file-input"></label>
+                            <input class="inputbutton" type="file" id="file-input" multiple accept=".txt" />
+                        </div>
 
-                    <div class="inputbutton-container">
-                        <label class="inputlabel" for="file-input"></label>
-                        <input class="inputbutton" type="file" id="file-input" multiple accept=".txt" />
-                    </div>
-
-                    <div class="chart-container" id="chart-container">
-                        <div class="chart" id="chart"></div>
-                    </div>
+                        <div class="chart-container" id="chart-container">
+                            <div class="chart" id="chart"></div>
+                        </div>
 
 
-                    <div class="buttons-container">
+                        <div class="buttons-container">
 
-                        <button class="save" id="save-button">Save</button>
-                        <button class="export" id="export-button">Export</button>
-                        <button class="previous" id="prev-button">Previous</button>
-                        <button class="next" id="next-button">Next</button>
+                            <button class="save" id="save-button">Save</button>
+                            <button class="export" id="export-button">Export</button>
+                            <button class="previous" id="prev-button">Previous</button>
+                            <button class="next" id="next-button">Next</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -82,7 +83,7 @@
 
         </main>
         <footer class="footer">
-            <p>Contact donal.vanuunen@tno.nl for questions or suggestions.</p>
+            <p><span>Contact <span><a>donal.vanuunen@tno.nl</a></span> for questions or suggestions.</span></p>
         </footer>
     </div>
     <!-- Load plotly.js library -->
