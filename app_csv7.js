@@ -18,7 +18,7 @@ const chart = document.getElementById('chart');
 // Detect the browser and set the paragraph text accordingly
 const isFirefox = typeof InstallTrigger !== 'undefined'; // Check if the browser is Firefox
 if (isFirefox) {
-  fileText.textContent = '"Browse"';
+  fileText.textContent = 'Browse';
 } else {
   fileText.textContent = '"Choose Files"';
 }
@@ -61,7 +61,7 @@ function initializePlot() {
     200, 300, 400, 500, 600, 700, 800, 900 // Between 100 and 1000
   ];
   // Initialize the plot traces (each trace can contain separate data to plot)
-  var trace1 = {
+  let trace1 = {
     x: x_initial,
     y: calcPercent(y_initial),
     type: 'scatter',
@@ -70,28 +70,19 @@ function initializePlot() {
     name: 'Fraction (%)'
   };
 
-  var trace2 = {
+  let trace2 = {
     x: x_initial,
     y: calcPercent(y_cumulative),
     type: "scatter",
     mode: "lines",
-    line: { color: 'rgb(0, 3, 10)', shape: "spline"},
+    line: { color: 'rgb(0, 3, 10)', shape: "spline", dash:"dash"},
     yaxis: 'y2',
     name: 'Cumulative (%)',  
   };
 
-  var trace2 = {
-    x: x_initial,
-    y: calcPercent(y_cumulative),
-    type: "scatter",
-    mode: "lines",
-    line: { color: 'rgb(0, 3, 10)', shape: "spline"},
-    yaxis: 'y2',
-    name: 'Cumulative (%)',  
-  };
+  
 
-
-  var trace3 = {
+  let trace3 = {
     x: minorGridlinePositions.map(Math.log10),
     y: [0, 100], // Adjust the y-axis range as needed
     type: 'bar',
@@ -136,7 +127,7 @@ function initializePlot() {
       showline: true,
       showgrid: true,
       tickmode: 'array',
-      ticklen: 10,
+      ticklen: 7,
       tickwidth: .7,
       mirror:true,
       dtick: 1,
@@ -145,15 +136,12 @@ function initializePlot() {
         tickmode: "array",
         
       },
-     
-      
-      
-    
+            
     }/* ,
     xaxis2: {
       title: 'yaxis whooo',
       side:'top',
-      ticklen: 10,
+      ticklen: 7,
       tickwidth: 1,
       showgrid: true,
       showline: true
@@ -164,7 +152,7 @@ function initializePlot() {
       autorange: false,
       showline: true,
       showgrid: false,
-      ticklen: 10,
+      ticklen: 7,
       tickwidth: .7,
     },
     yaxis2: {
@@ -179,7 +167,7 @@ function initializePlot() {
       tickmode: 'linear',
       tick0: 0,
       dtick: 20,
-      ticklen: 10,
+      ticklen: 7,
       tickwidth: 1,
     }
   };

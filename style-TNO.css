@@ -74,6 +74,10 @@ bold {
     font-weight: var(--font-weight-bold);
 }
 
+.button-font {
+    font-family: var(--font-family-3);
+}
+
 
 .text-accent {
     color: var(--accent-color);
@@ -87,18 +91,24 @@ bold {
     color: var(--accent-color);
 }
 
-/*Layout*/
-.chart-container {
 
-    background-color: white;
-    width: 50vw;
-    height: 50vh;
-    border: 2px solid var(--neutral-dark);
-    border-radius: 10px;
-
-
-    /*  padding: var(--graph-padding); */
+.text-theme1 {
+    color: var(--theme-color-1)
 }
+
+.text-theme2 {
+    color: var(--theme-color-2)
+}
+
+.text-theme3 {
+    color: var(--theme-color-3)
+}
+
+.text-theme4 {
+    color: var(--theme-color-4)
+}
+
+
 
 
 
@@ -106,10 +116,7 @@ bold {
 body {
     color: var(--text-color);
     margin: 0 auto;
-
 }
-
-
 
 
 header {
@@ -179,32 +186,18 @@ header {
     height: 100%;
     width: 50%;
     box-shadow: 0px 0px 10px 5px var(--accent-color);
-
 }
-
 
 
 main {
     background-color: var(--neutral-light);
 }
 
-
-footer {
-    border-top: 2px solid var(--primary-light);
-    /*  border-bottom: 2px solid var(--accent-color); */
-    background-color: var(--neutral-color);
-    padding: 30px;
-    font-family: var(--font-family-1);
-    font-size: 16px;
-    color: var(--neutral-dark);
-}
-
-/* Apply dark mode colors to the body and other elements */
-
 h1 {
     font-family: var(--font-family-1);
     font-size: 36px;
     text-align: center;
+
 }
 
 
@@ -216,6 +209,15 @@ h1 {
     justify-content: flex-end;
 }
 
+/*Layout*/
+.chart-container {
+    background-color: white;
+    min-width: 60%;
+    min-height: 50%;
+    border: 2px solid var(--neutral-dark);
+    border-radius: 10px;
+    /*  padding: var(--graph-padding); */
+}
 
 /*Chart */
 .chart {
@@ -236,10 +238,10 @@ h1 {
     align-items: center;
     flex-direction: column;
     gap: 20px;
-    box-shadow: 0 0 10px var(--neutral-light);
+    /*   box-shadow: 0 0 10px var(--neutral-light);
     padding: 0 20px 20px 20px;
     background-color: var(--neutral-darker);
-    clip-path: polygon(1% 0%, 99% 0%, 100% 1%, 100% 99%, 99% 100%, 1% 100%, 0% 99%, 0% 1%);
+    clip-path: polygon(1% 0%, 99% 0%, 100% 1%, 100% 99%, 99% 100%, 1% 100%, 0% 99%, 0% 1%); */
 }
 
 .chart-card h1 {
@@ -248,16 +250,32 @@ h1 {
     font-weight: var(--font-weight-bold);
     margin-top: 40px;
     margin-right: auto;
+    margin-left: 1rem;
 }
 
 .chart-card p {
     font-family: var(--font-family-2);
     font-weight: var(--font-weight-light);
     font-size: 18px;
-
+    text-align: justify;
+    width: 100%;
+    padding: 0 1rem;
 }
 
-/*Buttons*/
+footer {
+    border-top: 2px solid var(--primary-light);
+    /*  border-bottom: 2px solid var(--accent-color); */
+    background-color: var(--neutral-color);
+    padding: 30px;
+    font-family: var(--font-family-1);
+    font-size: 16px;
+    color: var(--neutral-dark);
+}
+
+
+
+
+/***BUTTONS***Positioning and typography*******************************************************************************/
 
 .inputbutton-container {
     display: flex;
@@ -275,7 +293,7 @@ input {
 }
 
 input[type=file]::file-selector-button {
-    border: none;
+    border: 1px solid var(--neutral-light);
     padding: 10px;
     border-radius: 10px;
     background-color: var(--accent-color);
@@ -283,8 +301,6 @@ input[type=file]::file-selector-button {
     transition: .3s;
     font-family: var(--font-family-3);
     margin-right: 20px;
-
-
 }
 
 input[type=file]::file-selector-button:hover {
@@ -298,31 +314,24 @@ input[type=file]::file-selector-button:hover {
     display: flex;
     justify-content: space-between;
     min-height: 50px;
+    margin-bottom: 20px;
 }
 
 .save,
+.export,
 .next,
 .previous {
     appearance: none;
     border: none;
     border-radius: 5px;
-    background-color: var(--primary-color);
-    color: var(--neutral-light);
     padding: 10px;
     cursor: pointer;
     display: inline-block;
     min-width: 10rem;
     font-family: var(--font-family-3);
     font-size: 1.1rem;
-
     overflow: hidden;
     /* text-overflow: ellipsis; */
-}
-
-.next,
-.previous {
-    background-color: var(--accent-color);
-    color: var(--neutral-light);
 }
 
 .previous {
@@ -330,12 +339,71 @@ input[type=file]::file-selector-button:hover {
     margin-right: 1rem;
 }
 
-.save {
+.save,
+.export {
     margin-right: 1rem;
 }
 
+/***BUTTONS***COLORS*******************************************************************************/
 
+.save,
+.export,
+.next,
+.previous {
+    background-color: var(--primary-color);
+    color: var(--neutral-light);
+}
+
+.save {
+    background-color: var(--theme-color-1);
+    color: var(--neutral-light);
+}
+
+.save:hover {
+    background-color: var(--neutral-light);
+    color: var(--theme-color-1);
+    border: 1px solid var(--theme-color-1);
+}
+
+.export {
+    background-color: var(--theme-color-2);
+    color: var(--neutral-light);
+}
+
+.export:hover {
+    background-color: var(--neutral-light);
+    color: var(--theme-color-2);
+    border: 1px solid var(--theme-color-2);
+}
+
+.previous,
+.previous:disabled:hover {
+    background-color: var(--theme-color-3);
+    color: var(--neutral-light);
+}
+
+.previous:hover {
+    background-color: var(--neutral-light);
+    color: var(--theme-color-3);
+    border: 1px solid var(--theme-color-3);
+}
+
+.next,
+.next:disabled:hover {
+    background-color: var(--theme-color-4);
+    color: var(--neutral-light);
+}
+
+.next:hover {
+    background-color: var(--neutral-light);
+    color: var(--theme-color-4);
+    border: 1px solid var(--theme-color-4);
+}
+
+
+/***BUTTONS***Animations*******************************************************************************/
 .save:hover,
+.export:hover,
 .next:hover,
 .previous:hover {
     transform: scale(1.05);
@@ -343,24 +411,13 @@ input[type=file]::file-selector-button:hover {
     cursor: pointer;
 }
 
-.save:hover {
-    background-color: var(--neutral-light);
-    color: var(--primary-light);
-    border: 1px solid var(--primary-light);
-}
-
-.next:hover,
-.previous:hover {
+.next:hover {
     transform: translateX(2px);
-    background-color: var(--neutral-light);
-    color: var(--accent-color);
-    border: 1px solid var(--accent-color);
 }
 
 .previous:hover {
     transform: translateX(-2px);
 }
-
 
 .next:disabled,
 .previous:disabled {
@@ -375,12 +432,22 @@ input[type=file]::file-selector-button:hover {
     cursor: pointer;
     transform: scale(1);
     transition-duration: 0;
-    background-color: var(--accent-color);
-    color: var(--neutral-light);
 }
 
 
 @media screen and (max-width: 600px) {
+
+    /*Layout*/
+    .chart-container {
+        background-color: white;
+        width: 80%;
+        height: 80%;
+        max-width: 600px;
+        max-height: 600px;
+        border: 2px solid var(--neutral-dark);
+        border-radius: 10px;
+        /*  padding: var(--graph-padding); */
+    }
 
     .buttons-container {
         display: grid;
