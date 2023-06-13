@@ -37,15 +37,12 @@
 
 
 
-    --font-family-1-light: "FSMe-Light", sans-serif;
-    --font-family-1: "FSMe", sans-serif;
-    --font-family-1-bold: "FSMe-Bold", sans-serif;
+
+    --font-family-1: 'Montserrat', sans-serif;
+    --font-family-2: 'PT Sans', sans-serif;
+    --font-family-3: 'Bruno Ace SC', cursive;
 
 
-    --font-family-2: "ObjectSans-Regular", sans-serif;
-    --font-family-2-bold: "ObjectSans-Heavy", sans-serif;
-    --font-family-2-slanted: "ObjectSans-Slanted", sans-serif;
-    --font-family-2-slanted-bold: "ObjectSans-HeavySlanted", sans-serif;
 
 
 
@@ -112,9 +109,7 @@ body {
 
 }
 
-* {
-    font-family: var(--font-family-2-slanted)
-}
+
 
 
 header {
@@ -123,6 +118,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
+
 }
 
 .logo {
@@ -141,6 +137,9 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: var(--font-family-2);
+    font-style: italic;
+    font-weight: var(--font-weight-bold);
 }
 
 .flex-filler {
@@ -190,8 +189,6 @@ main {
 }
 
 
-
-
 footer {
     border-top: 2px solid var(--primary-light);
     /*  border-bottom: 2px solid var(--accent-color); */
@@ -205,7 +202,7 @@ footer {
 /* Apply dark mode colors to the body and other elements */
 
 h1 {
-    font-family: var(--font-family-2-slanted-bold);
+    font-family: var(--font-family-1);
     font-size: 36px;
     text-align: center;
 }
@@ -247,15 +244,15 @@ h1 {
 
 .chart-card h1 {
 
-    font-family: var(--font-family-2);
+    font-family: var(--font-family-1);
     font-weight: var(--font-weight-bold);
     margin-top: 40px;
     margin-right: auto;
 }
 
 .chart-card p {
-    font-family: var(--font-family-1);
-    font-weight: var(--font-weight-regular);
+    font-family: var(--font-family-2);
+    font-weight: var(--font-weight-light);
     font-size: 18px;
 
 }
@@ -267,7 +264,7 @@ h1 {
     flex-direction: column;
     gap: 20px;
     font-family: var(--font-family-2);
-    font-weight: var(--font-weight-regular);
+    font-weight: var(--font-weight-light);
     font-size: 24px;
 }
 
@@ -282,18 +279,19 @@ input[type=file]::file-selector-button {
     padding: 10px;
     border-radius: 10px;
     background-color: var(--accent-color);
-    color: var(--text-color);
+    color: var(--neutral-light);
     transition: .3s;
-    font-family: var(--font-family-1);
+    font-family: var(--font-family-3);
     margin-right: 20px;
 
 
 }
 
 input[type=file]::file-selector-button:hover {
-    background-color: var(--text-color);
+    background-color: var(--neutral-light);
     color: var(--accent-color);
     cursor: pointer;
+    border: 1px solid var(--accent-color)
 }
 
 .buttons-container {
@@ -314,7 +312,7 @@ input[type=file]::file-selector-button:hover {
     cursor: pointer;
     display: inline-block;
     min-width: 10rem;
-    font-family: var(--font-family-2);
+    font-family: var(--font-family-3);
     font-size: 1.1rem;
 
     overflow: hidden;
