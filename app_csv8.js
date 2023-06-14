@@ -52,7 +52,8 @@ function createGridShapes(){
      // Between 0.1 and 1
     1, 2, 3, 4, 5, 6, 7, 8, 9, // Between 1 and 10
     10, 20, 30, 40, 50, 60, 70, 80, 90, // Between 10 and 100
-    20, 200, 300, 400, 500, 600, 700, 800, 900, 1000 // Between 100 and 1000
+    20, 200, 300, 400, 500, 600, 700, 800, 900, 
+    1000, 2000,3000,4000,5000,6000,7000,8000,9000,10000 // Between 100 and 1000
   ];
   
   let shapes = [];
@@ -84,7 +85,7 @@ function initializePlot() {
 
   const y_cumulative = calcCumulative(y_initial);
 
-const tickValues= [0.1,1,10,100,1000,5000]
+const tickValues= [0.1,1,10,100,1000,10000]
 
 shapes = createGridShapes();
 
@@ -140,7 +141,7 @@ shapes = createGridShapes();
     xaxis: {
       type: 'log',
       title: 'Diameter (µm)',
-      range: [Math.log10(0.1), Math.log10(5000)],
+      range: [Math.log10(0.1), Math.log10(10000)],
       autorange: false,
       showline: true,
       showgrid: false,  
@@ -170,7 +171,6 @@ shapes = createGridShapes();
       showline: true,
       showgrid: false,
       zeroline: false,
-      showticklabels: true,
       tickmode: 'linear',
       tick0: 0,
       dtick: 20,

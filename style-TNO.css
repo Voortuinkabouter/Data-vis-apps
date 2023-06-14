@@ -164,7 +164,7 @@ header {
 /* Center the container and give it some margin */
 .container {
     position: relative;
-    max-width: 1400px;
+    max-width: 100vw;
     margin: auto auto auto auto;
     background-color: var(--neutral-light);
 }
@@ -174,7 +174,7 @@ header {
     position: absolute;
     content: ' ';
     height: 100%;
-    width: 10px;
+    width: 16px;
     background-color: var(--primary-color);
 }
 
