@@ -43,7 +43,7 @@
 
     --theme-color-2-light: hsl(191, 46%, 84%);
     --theme-color-2: hsl(188, 50%, 60%);
-    --theme-color-2-dark: hsl(188, 22%, 64%);
+    --theme-color-2-dark: rgb(143, 178, 183);
 
     --theme-color-3-light: hsl(258, 33%, 80%);
     --theme-color-3: hsl(259, 47%, 62%);
@@ -151,9 +151,9 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: var(--font-family-2);
-    font-style: italic;
+    font-family: var(--font-family-1);
     font-weight: var(--font-weight-bold);
+    font-size: 1.5rem;
 }
 
 .flex-filler {
@@ -192,7 +192,7 @@ header {
     z-index: -1;
     height: 100%;
     width: 50%;
-    box-shadow: 0px 0px 10px 5px var(--accent-color);
+    box-shadow: 0px 0px 10px 5px var(--primary-color);
 }
 
 
@@ -200,12 +200,7 @@ main {
     background-color: var(--neutral-light);
 }
 
-h1 {
-    font-family: var(--font-family-1);
-    font-size: 36px;
-    text-align: center;
 
-}
 
 
 /* Style the app-container with a flex layout and some gap */
@@ -231,11 +226,12 @@ h1 {
 
 .introduction h1 {
 
-    font-family: var(--font-family-1);
+    font-family: var(--font-family-2);
     font-weight: var(--font-weight-bold);
     margin-top: 40px;
     margin-right: auto;
     margin-left: 1rem;
+    font-style: italic;
 }
 
 .introduction p {
@@ -293,28 +289,53 @@ footer {
     font-family: var(--font-family-1);
     font-size: 16px;
     color: var(--neutral-dark);
+    min-height: 100px;
 }
 
 footer p span {
-    border-bottom: 4px solid var(--primary-color);
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;
     width: 100%;
-
 }
 
-footer p span a {
+.mail-link {
     color: var(--primary-color);
     cursor: pointer;
+    transition: 0.2s linear;
+    font-style: italic;
 }
 
-footer p span a:hover {
+.mail-link:hover {
     color: var(--primary-light);
     cursor: pointer;
+    border-bottom: 7px solid var(--neutral-dark);
+
+
 }
 
+.border-color-neutral {
+    /*     border-bottom: 4px solid var(--neutral-dark); */
+    transition: 0.2s linear;
+}
 
+.border-color-primary {
+    /* border-bottom: 4px solid var(--primary-color); */
+    transition: 0.2s linear;
+}
 
+.hovered {
+    border-bottom: 7px solid var(--primary-light);
+
+    /* CSS styles for the text before and after the link when link is being hovered */
+}
+
+/* footer a:hover>:not(:hover) {
+    border-bottom: 5px solid var(--primary-light);
+}
+
+span.border-color-primary:hover {
+    border-bottom: 4px solid var(--neutral-dark);
+
+}
+ */
 
 /***BUTTONS***Positioning and typography*******************************************************************************/
 
