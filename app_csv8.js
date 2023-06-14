@@ -84,7 +84,7 @@ function initializePlot() {
 
   const y_cumulative = calcCumulative(y_initial);
 
-const tickValues= [0,1,1,10,100,1000]
+const tickValues= [0.1,1,10,100,1000,5000]
 
 shapes = createGridShapes();
 
