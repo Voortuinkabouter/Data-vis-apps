@@ -11,10 +11,37 @@ const fileText = document.getElementById("file-text");
 //get the chart
 const chart = document.getElementById('chart');
 
+
+/* Get the documentElement (<html>) to display the page in fullscreen */
+var elem = document.documentElement;
+
+
+/* View in fullscreen */
+function openFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
+  }
+}
+
+/* Close fullscreen */
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) { /* Safari */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE11 */
+    document.msExitFullscreen();
+  }
+}
+
+
+openFullscreen(); 
+
 // Set the displayed button text to "Choose Files, regardless of browser"
-
-
-
 // Detect the browser and set the paragraph text accordingly
 const isFirefox = typeof InstallTrigger !== 'undefined'; // Check if the browser is Firefox
 if (isFirefox) {
