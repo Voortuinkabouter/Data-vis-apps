@@ -7,7 +7,7 @@
     <!-- displays site properly based on user's device -->
 
 
-    <link rel="stylesheet" href="style-TNO.css">
+    <link rel="stylesheet" href="style-TNO2.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,8 +31,9 @@
             </nav>
             <div class="flex-filler"></div>
         </header>
-        <main>
-            <div class="app-container">
+        <div class="app-container">
+            <main>
+
 
                 <div class="introduction">
                     <h1>Plot a Graph!</h1>
@@ -56,7 +57,9 @@
                         fraction (%)/volume (%),
                         cumulative (%) and other info.</p>
 
+                </div>
 
+                <div class="two-columns">
                     <div class="chart-card">
                         <div class="inputbutton-container">
                             <label class="inputlabel" for="file-input"></label>
@@ -76,8 +79,50 @@
                             <button class="next" id="next-button">Next</button>
                         </div>
                     </div>
+
+                    <form class="options-container">
+                        <h1>Options:</h1>
+
+
+                        <div class="checkbox option-btn">
+                            <label class="checkbox-label"><span class="border-right">Show Grid</span><input
+                                    type="checkbox" name="checkbox-grid" id="checkbox-grid" checked /></label>
+
+                        </div>
+
+
+                        <!-- 
+                        <div class="option-btn">
+                            <label class="switch-label">
+                                <input type="checkbox">
+                                <span class="slider border-right">Scale</span>
+                                <span>Lin</span><span>Log</span>
+                            </label>
+                        </div>
+ -->
+
+                        <div class="switch option-btn ">
+                            <label class="switch-label">
+                                <span class="border-right">Scale</span>
+                                <input type="checkbox" name="scale-switch" id="scale-switch" value="1">
+                                <label for="scale-switch" data-on="Lin." data-off="Log." class="switch-inner"></label>
+                            </label>
+
+
+
+
+
+
+
+
+                    </form>
+
+
+
                 </div>
-            </div>
+        </div>
+
+
 
 
 
@@ -94,6 +139,7 @@
 
         </footer>
     </div>
+
     <!-- Load plotly.js library -->
 
 </body>

@@ -6,6 +6,10 @@ const prevButton = document.getElementById("prev-button");
 const nextButton = document.getElementById("next-button");
 const saveButton = document.getElementById("save-button");
 const exportButton = document.getElementById("export-button");
+
+const radioButtons = document.querySelectorAll('input[type="radio"]');
+
+
 const fileText = document.getElementById("file-text");
 
 //get the chart
@@ -71,8 +75,14 @@ function createGridShapes(){
     // Push the shape to the array
     shapes.push(shape);
   });
-  return shapes
+  return   {
+    On: shapes,
+    Off: [],
+  }
+  
 }
+
+let GridShapes = createGridShapes(); 
 
 // Initialize the dummy x, y data, and all Plotly setup: Trace1, Trace2, Layout, Config and create an object.
 function initializePlot() {
@@ -84,7 +94,8 @@ function initializePlot() {
 
 const tickValues= [0.1,1,10,100,1000,10000]
 
-shapes = createGridShapes();
+console.log(GridShapes)
+
 
 
 
@@ -175,7 +186,7 @@ shapes = createGridShapes();
       tickwidth: 1,
     },
     
-    shapes: shapes
+    shapes: GridShapes.On
   };
 
   var config = {
@@ -226,8 +237,7 @@ function updatePlot() {
     ],
     layout: {
       title: {text: info.filename, font:{size:16}},
-     
-      
+          
       yaxis: {
         title: yaxisTitle,
         range: [0, 20]}/* , // Assign the title directly
@@ -244,9 +254,16 @@ function updatePlot() {
     traces: [0, 1],
     mode: 'immediate'
   });
-
   console.log("Plot updated!");
+
+  
+/*   const shapes = []
+
+  Plotly.relayout('chart', {'shapes': shapes});
+   
+  console.log("Shapes updated!"); */
 }
+
 
 
 //*** On file change, Browse button ***//
@@ -526,9 +543,62 @@ console.log(PlotData.layout.legend.x)
       console.error(error);
     });
 }
+
+
+/* 
+radioButtons.forEach((radio) => {
+  radio.addEventListener('change', (event) => {
+    console.log("Radio button clicked")
+    // Remove the 'active' class from all buttons
+    document.querySelectorAll('.btn').forEach((btn) => {
+      btn.classList.remove('active');
+    });
+
+    // Add the 'active' class to the selected button
+    event.target.nextElementSibling.classList.add('active');
+
+
+  });
+}); */
+
+
+
 function hoverLink(hover) {
   const elements = document.querySelectorAll('.border-color-primary');
   for (const element of elements) {
     element.classList.toggle('hovered', hover);
   }
 }
+
+
+
+const checkboxGrid = document.getElementById("checkbox-grid");
+const scaleSwitch = document.getElementById("scale-switch");
+
+checkboxGrid.addEventListener("change", () => {
+  if (checkboxGrid.checked) {
+    console.log("Grid is checked");
+    // Update your JavaScript variable accordingly
+    Plotly.relayout('chart', {'shapes': GridShapes.On});
+    console.log(GridShapes.On)
+  } else {
+       console.log("Grid is unchecked");
+      const shapes = []
+
+      Plotly.relayout('chart', {'shapes': GridShapes.Off});
+      console.log(GridShapes.On)
+      
+      console.log("Shapes updated!");
+        // Update your JavaScript variable accordingly
+  }
+});
+
+scaleSwitch.addEventListener("change", () => {
+  if (scaleSwitch.checked) {
+    console.log("Switch is toggled to Lin.");
+    // Update your JavaScript variable accordingly
+  } else {
+    console.log("Switch is toggled to Log.");
+    // Update your JavaScript variable accordingly
+  }
+});
