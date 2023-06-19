@@ -571,7 +571,6 @@ function hoverLink(hover) {
 }
 
 
-
 const checkboxGrid = document.getElementById("checkbox-grid");
 const scaleSwitch = document.getElementById("scale-switch");
 
