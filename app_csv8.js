@@ -1,20 +1,24 @@
 
-//*** On page load ***//
-// Get the buttons
+/* #############   Constants #########*/
+/*   Graph buttons  */
 const fileInput = document.getElementById("file-input");
 const prevButton = document.getElementById("prev-button");
 const nextButton = document.getElementById("next-button");
 const saveButton = document.getElementById("save-button");
 const exportButton = document.getElementById("export-button");
 
-const radioButtons = document.querySelectorAll('input[type="radio"]');
+/*  Option buttons  */
+const checkboxGrid = document.getElementById("checkbox-grid");
+const scaleSwitch = document.getElementById("scale-switch");
+const switchLabel = document.querySelector(".switch-label");
 
 
-const fileText = document.getElementById("file-text");
-
-//get the chart
+/*  Chart */
 const chart = document.getElementById('chart');
 
+
+/*Text in introduction paragraph that changes on browser settings, because the file-input button text is browser dependend*/
+const fileText = document.getElementById("file-text");
 // Set the displayed button text to "Choose Files, regardless of browser"
 // Detect the browser and set the paragraph text accordingly
 const isFirefox = typeof InstallTrigger !== 'undefined'; // Check if the browser is Firefox
@@ -23,14 +27,19 @@ if (isFirefox) {
 } else {
   fileText.textContent = '"Choose Files"';
 }
+/*************************************/
 
 
-// Initialize data extraction variables.
-let data_extracted= [];
-let current_data_index = 0;
+/* #############   Resets #########*/
+document.addEventListener("DOMContentLoaded", resetScaleSwitch);
+function resetScaleSwitch(){
+  // Reset the checkbox states on page load
+  checkboxGrid.checked = false;
+  scaleSwitch.checked = false;
+};
 
-//update button state (for css styling  [class]:disabled{etc)
-updateButtonState();
+
+
 
 // Math functions to calculate x and y data if neccesary
 function calcCumulative(array) {
@@ -46,6 +55,16 @@ function calcPercent(array) {
   const totalSum = array[array.length - 1];
   return array.map(value => (value / totalSum) * 100);
 }
+
+
+/* #############  Setup  #########*/
+// Initialize data extraction variables.
+let data_extracted= [];
+let current_data_index = 0;
+
+//update button state (for css styling  [class]:disabled{etc)
+updateButtonState();
+
 // Create shapes that are used as gridlines for logscale plots
 function createGridShapes(){
   const minorGridlineX = [
@@ -81,8 +100,17 @@ function createGridShapes(){
   }
   
 }
-
 let GridShapes = createGridShapes(); 
+
+//Create ranges for the x-axis (log/lin) and create a layout.axis object that can be loaded.
+function createXRange(){
+  return
+}
+/*************************************/
+
+
+
+/* #############  Plot initialization  #########*/
 
 // Initialize the dummy x, y data, and all Plotly setup: Trace1, Trace2, Layout, Config and create an object.
 function initializePlot() {
@@ -208,10 +236,64 @@ console.log(GridShapes)
 // Call the function and store the returned object and create a new plotly plot object
 let PlotData = initializePlot();
 let initial_data = [PlotData.trace1, PlotData.trace2];
+
+// Create the actual plot using the initialized variables
 Plotly.newPlot('chart', initial_data, PlotData.layout, PlotData.config);
 
-//********************//
 
+
+
+/* #############  Updating plot  #########*/
+
+function updateLayout(){
+  if (scaleSwitch.checked) {
+    // Use linear scale
+    PlotData.layout.xaxis.mirror = false;
+    PlotData.layout.xaxis.autorange = true;
+    PlotData.layout.xaxis.type = "linear";
+    PlotData.layout.xaxis.tickvals = null;
+
+
+
+    Plotly.relayout('chart', { 'xaxis': PlotData.layout.xaxis });
+  
+
+   /*    Plotly.relayout("chart", {
+        "xaxis.type": "linear",
+        "xaxis.range": 'autorange',
+        "xaxis.autorange": true,
+        "tickvals":[],
+        "mirror": false
+      }); */
+  } 
+  else{
+      // Use log scale
+      Plotly.relayout("chart", {
+        "xaxis.type": "log",
+        "xaxis.range": [Math.log10(0.1), Math.log10(10000)],
+        "xaxis.autorange": false,
+      });
+  }
+}
+
+
+function updateGrid(){
+  if (checkboxGrid.checked) {
+    console.log("Grid is checked");
+    // Update your JavaScript variable accordingly
+    Plotly.relayout('chart', {'shapes': GridShapes.On});
+    console.log(GridShapes.On)
+  } else {
+       console.log("Grid is unchecked");
+      const shapes = []
+
+      Plotly.relayout('chart', {'shapes': GridShapes.Off});
+      console.log(GridShapes.On)
+      
+      console.log("Shapes updated!");
+        // Update your JavaScript variable accordingly
+  }
+}
 
 //Updates only the data, x,y,y2 and some layout updates like title and fontsize
 function updatePlot() { 
@@ -263,11 +345,15 @@ function updatePlot() {
    
   console.log("Shapes updated!"); */
 }
+/*************************************/
 
 
+
+
+
+/* #############  File processing  #########*/
 
 //*** On file change, Browse button ***//
-
 fileInput.addEventListener('change', () => {
   const files = fileInput.files;
   current_data_index = 0;
@@ -389,8 +475,12 @@ function extractValues(rows) {
 
   return { x, y1, y2 };
 }
-//*************************************//
+/*************************************/
 
+
+
+
+/*#############  Buttons  #########*/
 
 //*** ALl other button related functions ***//
 nextButton.addEventListener('click', plotGraph);
@@ -413,7 +503,6 @@ function updateButtonState() {
     console.log("Buttons enabled")
   }
 }
-
 function plotGraph(event) {
   console.log("Files selected:", read_file);
 
@@ -430,7 +519,6 @@ function plotGraph(event) {
     updatePlot();
   }
 }
-
 function exportToExcel() {
   const workbook = XLSX.utils.book_new(); // Create a new workbook
   const existingSheetNames = []; // Array to store existing sheet names
@@ -475,7 +563,6 @@ function exportToExcel() {
   const filename = `SLS_export_${formattedDate}.xlsx`;
   XLSX.writeFile(workbook, filename); // Save the workbook as a file
 }  
-
 function saveAllPlots() {
   // Update the legend position in the layout for the saved file
 console.log(PlotData.layout.legend.x)
@@ -543,61 +630,49 @@ console.log(PlotData.layout.legend.x)
       console.error(error);
     });
 }
-
-
-/* 
-radioButtons.forEach((radio) => {
-  radio.addEventListener('change', (event) => {
-    console.log("Radio button clicked")
-    // Remove the 'active' class from all buttons
-    document.querySelectorAll('.btn').forEach((btn) => {
-      btn.classList.remove('active');
-    });
-
-    // Add the 'active' class to the selected button
-    event.target.nextElementSibling.classList.add('active');
-
-
-  });
-}); */
+/*************************************/
 
 
 
+/* #############   Option buttons  #########*/
+
+//Grid options
+checkboxGrid.addEventListener("change", updateGrid);
+
+
+
+// Scale options // 
+scaleSwitch.addEventListener("change", function(){ 
+    scaleSwitchLogger();
+    scaleSwitchToggler(scaleSwitch);
+    updateLayout();
+});
+
+function scaleSwitchLogger(){
+  if (scaleSwitch.checked) {
+     console.log("Switch is toggled to Lin.");
+    // Update your JavaScript variable accordingly
+  } else {
+    console.log("Switch is toggled to Log.");
+    // Update your JavaScript variable accordingly
+  }
+}
+function scaleSwitchToggler(switchElement) {
+  if (switchElement.checked) {
+    switchElement.parentNode.classList.add("checked");
+  } else {
+    switchElement.parentNode.classList.remove("checked");
+  }
+}
+
+
+
+
+// Hover link // 
 function hoverLink(hover) {
   const elements = document.querySelectorAll('.border-color-primary');
   for (const element of elements) {
     element.classList.toggle('hovered', hover);
   }
 }
-
-
-const checkboxGrid = document.getElementById("checkbox-grid");
-const scaleSwitch = document.getElementById("scale-switch");
-
-checkboxGrid.addEventListener("change", () => {
-  if (checkboxGrid.checked) {
-    console.log("Grid is checked");
-    // Update your JavaScript variable accordingly
-    Plotly.relayout('chart', {'shapes': GridShapes.On});
-    console.log(GridShapes.On)
-  } else {
-       console.log("Grid is unchecked");
-      const shapes = []
-
-      Plotly.relayout('chart', {'shapes': GridShapes.Off});
-      console.log(GridShapes.On)
-      
-      console.log("Shapes updated!");
-        // Update your JavaScript variable accordingly
-  }
-});
-
-scaleSwitch.addEventListener("change", () => {
-  if (scaleSwitch.checked) {
-    console.log("Switch is toggled to Lin.");
-    // Update your JavaScript variable accordingly
-  } else {
-    console.log("Switch is toggled to Log.");
-    // Update your JavaScript variable accordingly
-  }
-});
+/*************************************/
