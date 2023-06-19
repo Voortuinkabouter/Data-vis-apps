@@ -248,7 +248,7 @@ Plotly.newPlot('chart', initial_data, PlotData.layout, PlotData.config);
 function updateLayout(){
   if (scaleSwitch.checked) {
     // Use linear scale
-    PlotData.layout.xaxis.mirror = false;
+    
     PlotData.layout.xaxis.autorange = true;
     PlotData.layout.xaxis.type = "linear";
     PlotData.layout.xaxis.tickvals = null;
