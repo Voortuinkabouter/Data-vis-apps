@@ -34,7 +34,7 @@ if (isFirefox) {
 document.addEventListener("DOMContentLoaded", resetScaleSwitch);
 function resetScaleSwitch(){
   // Reset the checkbox states on page load
-  checkboxGrid.checked = false;
+/*   checkboxGrid.checked = false; */
   scaleSwitch.checked = false;
 };
 
@@ -93,10 +93,15 @@ function createGridShapes(){
     };
     // Push the shape to the array
     shapes.push(shape);
-  });
+  });  
+
+const tickValuesLog= [0.1,1,10,100,1000,10000]
+  
   return   {
     On: shapes,
     Off: [],
+    "tickValuesLog": tickValuesLog
+
   }
   
 }
@@ -109,7 +114,6 @@ function createXRange(){
 /*************************************/
 
 
-
 /* #############  Plot initialization  #########*/
 
 // Initialize the dummy x, y data, and all Plotly setup: Trace1, Trace2, Layout, Config and create an object.
@@ -119,8 +123,6 @@ function initializePlot() {
   let y_initial = x_initial.map(x_initial => x_initial ** 2);
 
   const y_cumulative = calcCumulative(y_initial);
-
-const tickValues= [0.1,1,10,100,1000,10000]
 
 console.log(GridShapes)
 
@@ -186,7 +188,7 @@ console.log(GridShapes)
       ticklen: 7,
       tickwidth: .7,
       dtick: 1,
-      tickvals: tickValues,
+      tickvals: GridShapes.tickValuesLog,
       
     }
     ,
@@ -240,20 +242,16 @@ let initial_data = [PlotData.trace1, PlotData.trace2];
 // Create the actual plot using the initialized variables
 Plotly.newPlot('chart', initial_data, PlotData.layout, PlotData.config);
 
-
-
-
 /* #############  Updating plot  #########*/
 
-function updateLayout(){
+function updateScale(){
   if (scaleSwitch.checked) {
     // Use linear scale
     
-    PlotData.layout.xaxis.autorange = true;
     PlotData.layout.xaxis.type = "linear";
+    PlotData.layout.xaxis.autorange = true;
+    PlotData.layout.xaxis.range="autorange"
     PlotData.layout.xaxis.tickvals = null;
-
-
 
     Plotly.relayout('chart', { 'xaxis': PlotData.layout.xaxis });
   
@@ -268,14 +266,13 @@ function updateLayout(){
   } 
   else{
       // Use log scale
-      Plotly.relayout("chart", {
-        "xaxis.type": "log",
-        "xaxis.range": [Math.log10(0.1), Math.log10(10000)],
-        "xaxis.autorange": false,
-      });
+      PlotData.layout.xaxis.type = "log";
+      PlotData.layout.xaxis.autorange = false;
+      PlotData.layout.xaxis.range= [Math.log10(0.1), Math.log10(10000)]
+      PlotData.layout.xaxis.tickvals = GridShapes.tickValuesLog
+      Plotly.relayout("chart", {"xaxis": PlotData.layout.xaxis});
   }
 }
-
 
 function updateGrid(){
   if (checkboxGrid.checked) {
@@ -335,7 +332,10 @@ function updatePlot() {
   }, {
     traces: [0, 1],
     mode: 'immediate'
-  });
+  })
+  updateGrid();
+  updateScale();
+  ;
   console.log("Plot updated!");
 
   
@@ -645,7 +645,7 @@ checkboxGrid.addEventListener("change", updateGrid);
 scaleSwitch.addEventListener("change", function(){ 
     scaleSwitchLogger();
     scaleSwitchToggler(scaleSwitch);
-    updateLayout();
+    updateScale();
 });
 
 function scaleSwitchLogger(){
